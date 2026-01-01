@@ -10,88 +10,194 @@ ggplot(idat, aes(cta, j.NH3, group = pmid, color = treat)) +
 ggsave2x('../plots/NH3.flux01', height = 10, width = 10)
 
 
-fsumm1 <- fsumm[fsumm$new.ID == c('1', '3', '5'), ]
-fsumm2 <- fsumm[fsumm$new.ID == c('2', '4', '6'), ]
-fsumm3 <- fsumm[fsumm$new.ID == c('7', '8', '9'), ]
+# Treatment names for publication purpose
+treat1 <- c(`AD` =  'Digestate',
+         `AD-F` =  'Digestate solid',
+         `AD-L` =  'Digestate liquid',
+         `PS` =  'Pig slurry',
+         `PS-F` =  'Pig slurry solid',
+         `PS-L` =  'Pig slurry liquid',
+         `AD-FB` =  'Digestate solid with biochar (high)',
+         `AD-LB1` =  'Digestate liquid with biochar (low)',
+         `AD-LB2` =  'Digestate liquid with biochar (high)',
+         `PS-LB1` =  'Pig slurry liquid with biochar (low)',
+         `PS-LB2` =  'Pig slurry liquid with biochar (high)')
 
-f1 <- ggplot(fsumm1, aes(cta, j.rel.mn, color = treat, fill = treat)) + 
+fsumm[, treat1 := treat1[treat]]
+
+fsumm1 <- fsumm[is.element(fsumm$new.ID, c('Trial 1', 'Trial 3', 'Trial 5')), ]
+fsumm2 <- fsumm[is.element(fsumm$new.ID, c('Trial 2', 'Trial 4', 'Trial 6')), ]
+fsumm3 <- fsumm[is.element(fsumm$new.ID, c('Trial 7', 'Trial 8', 'Trial 9')), ]
+
+
+f11 <- ggplot(fsumm1, aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
   geom_point(shape = 1, size = 0.5) + 
   geom_line() + 
-  facet_wrap(~ new.ID, ncol = 3) +
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
   theme_bw() + 
-  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat), alpha = 0.3, color = NA) + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
   ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
   theme(legend.position = 'bottom', legend.title = element_blank()) +
-  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) 
-
-f11 <- ggplot(fsumm1, aes(cta, j.rel.mn, color = treat, fill = treat)) + 
-  geom_point(shape = 1, size = 0.5) + 
-  geom_line() + 
-  facet_wrap(~ new.ID, ncol = 3) +
-  theme_bw() + 
-  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat), alpha = 0.3, color = NA) + 
-  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
-  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
   guides(colour = guide_legend(nrow = 1, byrow = TRUE)) +
   xlim(NA, 50)
 
-f2 <- ggplot(fsumm2, aes(cta, j.rel.mn, color = treat, fill = treat)) + 
+f22 <- ggplot(fsumm2, aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
   geom_point(shape = 1, size = 0.5) + 
   geom_line() + 
-  facet_wrap(~ new.ID, ncol = 3) +
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
   theme_bw() + 
-  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat), alpha = 0.3, color = NA) + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
   ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
   theme(legend.position = 'bottom', legend.title = element_blank()) +
-  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) 
-
-f22 <- ggplot(fsumm2, aes(cta, j.rel.mn, color = treat, fill = treat)) + 
-  geom_point(shape = 1, size = 0.5) + 
-  geom_line() + 
-  facet_wrap(~ new.ID, ncol = 3) +
-  theme_bw() + 
-  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat), alpha = 0.3, color = NA) + 
-  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
-  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
   guides(colour = guide_legend(nrow = 1, byrow = TRUE)) +
   xlim(NA, 50)
 
-f3 <- ggplot(fsumm3, aes(cta, j.rel.mn, color = treat, fill = treat)) + 
+f331 <- ggplot(fsumm3[fsumm3$new.ID == 'Trial 7', ], aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
   geom_point(shape = 1, size = 0.5) + 
   geom_line() + 
-  facet_wrap(~ new.ID, ncol = 3) +
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
   theme_bw() + 
-  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat), alpha = 0.3, color = NA) + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
   ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
   theme(legend.position = 'bottom', legend.title = element_blank()) +
-  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) 
-
-f33 <- ggplot(fsumm3, aes(cta, j.rel.mn, color = treat, fill = treat)) + 
-  geom_point(shape = 1, size = 0.5) + 
-  geom_line() + 
-  facet_wrap(~ new.ID, ncol = 3) +
-  theme_bw() + 
-  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat), alpha = 0.3, color = NA) + 
-  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
-  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
   guides(colour = guide_legend(nrow = 1, byrow = TRUE)) +
   xlim(NA, 50)
 
-mat <- matrix(c(1, 1, 1,
-                2, 2, 2,
-                3, 3, 3),
-              ncol = 1)
+f332 <- ggplot(fsumm3[fsumm3$new.ID == 'Trial 8', ], aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
+  geom_point(shape = 1, size = 0.5) + 
+  geom_line() + 
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
+  theme_bw() + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
+  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
+  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
+  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) +
+  xlim(NA, 50)
 
-pff <- grid.arrange(f1, f2, f3, layout_matrix = mat)
-ggsave2x('../plots/NH3.flux.comm.150', plot = pff, height = 10, width = 8)
+f333 <- ggplot(fsumm3[fsumm3$new.ID == 'Trial 9', ], aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
+  geom_point(shape = 1, size = 0.5) + 
+  geom_line() + 
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
+  theme_bw() + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
+  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
+  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
+  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) +
+  xlim(NA, 50)
 
-mat <- matrix(c(1, 1, 1,
-                2, 2, 2,
-                3, 3, 3),
-              ncol = 1)
+bottom <- (f331 | f332 | f333) +
+  plot_layout(guides = "collect") &
+  theme(
+    legend.position = "bottom",
+    legend.key.size = unit(0.4, "lines"),      # shrink legend keys
+    legend.spacing.y = unit(0.1, "lines")
+  ) &
+  guides(colour = guide_legend(nrow = 3, byrow = TRUE))
 
-pfff <- grid.arrange(f11, f22, f33, layout_matrix = mat)
-ggsave2x('../plots/NH3.flux.comm.50', plot = pfff, height = 10, width = 8)
+main_plots <- (f11 / f22 / bottom) +
+  plot_layout(
+    heights = c(1, 1, 1),    # All three rows get equal panel height
+    guides = "collect"       # Ensure only one legend
+  )
+
+
+yaxis_label <- ggplot() + 
+  theme_void() +
+  ylab(expression(paste("Flux (frac. TAN  ", h^-1, ")"))) +
+  theme(
+    axis.title.y = element_text(angle = 90, margin = margin (r = 2))
+  )
+
+pff <- yaxis_label + (f11 / f22 / bottom) + plot_layout(widths = c(0.01, 0.95))
+ggsave2x('../plots/NH3.flux.comm.50', plot = pff, height = 10, width = 8)
+
+
+
+
+f1 <- ggplot(fsumm1, aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
+  geom_point(shape = 1, size = 0.5) + 
+  geom_line() + 
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
+  theme_bw() + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
+  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
+  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
+  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) 
+
+f2 <- ggplot(fsumm2, aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
+  geom_point(shape = 1, size = 0.5) + 
+  geom_line() + 
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
+  theme_bw() + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
+  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
+  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
+  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) 
+
+f31 <- ggplot(fsumm3[fsumm3$new.ID == 'Trial 7', ], aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
+  geom_point(shape = 1, size = 0.5) + 
+  geom_line() + 
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
+  theme_bw() + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
+  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
+  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
+  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) 
+
+f32 <- ggplot(fsumm3[fsumm3$new.ID == 'Trial 8', ], aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
+  geom_point(shape = 1, size = 0.5) + 
+  geom_line() + 
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
+  theme_bw() + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
+  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
+  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
+  guides(colour = guide_legend(nrow = 1, byrow = TRUE))
+
+f33 <- ggplot(fsumm3[fsumm3$new.ID == 'Trial 9', ], aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
+  geom_point(shape = 1, size = 0.5) + 
+  geom_line() + 
+  facet_wrap(~ new.ID, ncol = 3, scales = 'free_y') +
+  theme_bw() + 
+  geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
+  ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
+  theme(legend.position = 'bottom', legend.title = element_blank()) +
+  theme(axis.title.y = element_blank()) +
+  guides(colour = guide_legend(nrow = 1, byrow = TRUE)) 
+
+bottom <- (f31 | f32 | f33) +
+  plot_layout(guides = "collect") &
+  theme(
+    legend.position = "bottom",
+    legend.key.size = unit(0.4, "lines"),      # shrink legend keys
+    legend.spacing.y = unit(0.1, "lines")
+  ) &
+  guides(colour = guide_legend(nrow = 3, byrow = TRUE))
+
+main_plots <- (f1 / f2 / bottom) +
+  plot_layout(
+    heights = c(1, 1, 1),    # All three rows get equal panel height
+    guides = "collect"       # Ensure only one legend
+  )
+
+yaxis_label <- ggplot() + 
+  theme_void() +
+  ylab(expression(paste("Flux (frac. TAN  ", h^-1, ")"))) +
+  theme(
+    axis.title.y = element_text(angle = 90, margin = margin (r = 2))
+  )
+
+pff <- yaxis_label + (f1 / f2 / bottom) + plot_layout(widths = c(0.01, 0.95))
+ggsave2x('../plots/NH3.flux.comm.135', plot = pff, height = 10, width = 8)
 
 
 ######### CUMULATIVE EMISSION
