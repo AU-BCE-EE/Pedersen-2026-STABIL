@@ -203,19 +203,23 @@ ggsave2x('../plots/NH3.flux.comm.135', plot = pff, height = 10, width = 8)
 ######### CUMULATIVE EMISSION
 
 # cumulative emission 
-ggplot(isumm, aes(treat, e.rel.135, color = treat)) + 
+ggplot(isumm, aes(treat, e.rel.130, color = treat)) + 
   geom_point() + 
   facet_wrap(~ new.ID, scales = 'free_x') + 
   theme_bw() + 
   labs(y = 'Loss (frac. of TAN)') + 
   theme(legend.title = element_blank()) + 
-  geom_boxplot(data = esumm, aes(x = treat, y = e.rel.135, color = treat), show.legend = FALSE)
+  geom_boxplot(data = esumm, aes(x = treat, y = e.rel.130, color = treat), show.legend = FALSE)
 ggsave2x('../plots/cum.emis01', height = 10, width = 10)
 
-# ############################################################################
+######### temperature
 
-# temperature # FIX SO THERE IS ONLY ONE LINE PR TRIAL
-ggplot(idat[idat$rep == '1', ], 
+idat_sub <- idat[idat$rep == '1', ]
+idat_first <- do.call(rbind, lapply(split(idat_sub, idat_sub$new.ID), function(df) {
+  df[df$pmid == df$pmid[1], ] 
+}))
+
+ggplot(idat_first, 
        aes(cta, air.temp, group = pmid)) + 
   geom_line() + 
   facet_wrap(~ new.ID, scales = 'free_x') +
