@@ -1,6 +1,6 @@
 
-idat <- fread('../data-emission/data/MAG_interval.csv')
-pdat <- fread('../data-emission/data/MAG_plot.csv')
+df <- read.xlsx('../auxiliary-data/surface-pH.xlsx')
+setDT(df)
 
 # New IDs for publication purpose
 IDs <- c(`1` =  'Trial 1',
@@ -13,4 +13,4 @@ IDs <- c(`1` =  'Trial 1',
          `8` =  'Trial 8',
          `9` =  'Trial 9')
 
-pdat[, new.ID := IDs[exper]]
+df[, new.ID := IDs[trial]]
