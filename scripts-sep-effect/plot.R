@@ -16,26 +16,20 @@ dfl$fill_id[dfl$component == "S"] <- paste0("S ", dfl$scenario_base[dfl$componen
 
 
 dfl$fill_id <- factor(dfl$fill_id,
-  levels = c("Unseparated", paste0("L Scenario ", 1:6), paste0("S Scenario ", 1:6)))
+  levels = c("Unseparated", paste0("L Scenario ", 1:3), paste0("S Scenario ", 1:3)))
 
 cols <- c(
   "Unseparated" = "darkgreen",
+  "L Scenario 2" = "#6baed6",
   "L Scenario 1" = "#c6dbef",
-  "L Scenario 2" = "#9ecae1",
-  "L Scenario 3" = "#6baed6",
-  "L Scenario 4" = "#4292c6",
-  "L Scenario 5" = "#2171b5",
-  "L Scenario 6" = "#084594",
+  "L Scenario 3" = "#c6dbef",
+  "S Scenario 2" = "#fec44f",
   "S Scenario 1" = "#fff7bc",
-  "S Scenario 2" = "#fee391",
-  "S Scenario 3" = "#fec44f",
-  "S Scenario 4" = "#fe9929",
-  "S Scenario 5" = "#ec7014",
-  "S Scenario 6" = "#cc4c02"
+  "S Scenario 3" = "#fff7bc"
 )
 
 
-dfl$x_id <- factor(dfl$scenario_base, levels = c("Unseparated", paste0("Scenario ", 1:6)))
+dfl$x_id <- factor(dfl$scenario_base, levels = c("Unseparated", 'Scenario 2', 'Scenario 1', 'Scenario 3'))
 
 dfl$x_plot <- interaction(dfl$new.ID, dfl$x_id, lex.order = TRUE)
 
@@ -52,8 +46,8 @@ ggplot(dfl, aes(x = x_plot, y = EF, fill = fill_id)) +
   theme_bw() +
   facet_grid( ~ new.ID, scales = "free_x") +
   theme(legend.title = element_blank(), legend.position = 'bottom', 
-    axis.ticks.x = element_blank(), axis.title.x = element_blank()) + 
-  scale_x_discrete(labels = function(x) {ifelse(grepl("Unseparated$", x), "", sub(".*Scenario ", "", x))}) + 
-  scale_fill_manual(values = cols, breaks = c("Unseparated", "L Scenario 3", "S Scenario 3"), labels = c("Unseparated", "Liquid fraction", "Solid fraction")) + 
+    axis.ticks.x = element_blank(), axis.title.x = element_blank(), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
+  scale_x_discrete(labels = c('', 'Average', 'High', 'Low')) + 
+  scale_fill_manual(values = cols, breaks = c("Unseparated", "L Scenario 2", "S Scenario 2"), labels = c("Unseparated", "Liquid fraction", "Solid fraction")) + 
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-ggsave2x('../plots/sep.scenarios', height = 5, width = 8)
+ggsave2x('../plots/sep.scenarios', height = 3.5, width = 6)

@@ -11,7 +11,7 @@
 # 6	        75	               25
 
 
-w <- c(0.01, 0.05, 0.10, 0.15, 0.20, 0.25)
+w <- c(0.01, 0.10, 0.25)
 
 # caculate total emission (liquid + solid) and for liquid and solid separately:
 weighted_matrix <- sapply(w, function(wi) {dw$liquid * (1 - wi) + dw$solid * wi})
@@ -31,7 +31,7 @@ dw <- cbind(dw, weighted_matrix_L, weighted_matrix_S)
 dfl <- melt(
   dw,
   id.vars = 'new.ID',
-  measure.vars = c('Unseparated', paste0('S Scenario ', 1:6), paste0('L Scenario ', 1:6)),
+  measure.vars = c('Unseparated', paste0('S Scenario ', 1:3), paste0('L Scenario ', 1:3)),
   variable.name = 'scenario',
   value.name = 'EF'
 )
