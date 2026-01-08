@@ -1,0 +1,103 @@
+data_slurry$experiment <- as.character(data_slurry$experiment)
+
+# Create summary table first
+summary_table_slurry <- data_slurry %>%
+  group_by(experiment, id) %>%
+  summarise(
+    pH = paste0(round(mean(pH, na.rm = TRUE), 2), 
+                " ± ", 
+                round(sd(pH, na.rm = TRUE), 2)),
+    DM = paste0(round(mean(DM, na.rm = TRUE), 2), 
+                " ± ", 
+                round(sd(DM, na.rm = TRUE), 2)),
+    VS = paste0(round(mean(VS, na.rm = TRUE), 2), 
+                " ± ", 
+                round(sd(VS, na.rm = TRUE), 2)),
+    "TN" = paste0(round(mean(total_N, na.rm = TRUE), 2), 
+                  " ± ", 
+                  round(sd(total_N, na.rm = TRUE), 2)),
+    "TAN" = paste0(round(mean(NH3_N, na.rm = TRUE), 2), 
+                   " ± ", 
+                   round(sd(NH3_N, na.rm = TRUE), 2)),
+    .groups = 'drop'
+  ) %>%
+  add_row(experiment = "", pH = "", DM = "%", VS = "%", "TN" = "g kg-1", "TAN" = "g kg-1", .before = 1)
+
+# Get reference values from summary table, as we need to correct and sobstitute some values for experiments 7, 8, 9.  
+ref_7_ADF_DM <- summary_table_slurry$DM[summary_table_slurry$experiment == "7" & summary_table_slurry$id == "AD-F"]
+ref_7_ADF_VS <- summary_table_slurry$VS[summary_table_slurry$experiment == "7" & summary_table_slurry$id == "AD-F"]
+ref_7_ADF_TN <- summary_table_slurry$TN[summary_table_slurry$experiment == "7" & summary_table_slurry$id == "AD-F"]
+ref_7_ADF_TAN<-summary_table_slurry$TAN[summary_table_slurry$experiment == "7" & summary_table_slurry$id == "AD-F"]
+
+ref_3_ADL_DM <- summary_table_slurry$DM[summary_table_slurry$experiment == "3" & summary_table_slurry$id == "AD-L"]
+ref_3_ADL_VS <- summary_table_slurry$VS[summary_table_slurry$experiment == "3" & summary_table_slurry$id == "AD-L"]
+ref_3_ADL_TN <- summary_table_slurry$TN[summary_table_slurry$experiment == "3" & summary_table_slurry$id == "AD-L"]
+ref_3_ADL_TAN<-summary_table_slurry$TAN[summary_table_slurry$experiment == "3" & summary_table_slurry$id == "AD-L"]
+
+ref_6_PSL_DM <- summary_table_slurry$DM[summary_table_slurry$experiment == "6" & summary_table_slurry$id == "PS-L"]
+ref_6_PSL_VS <- summary_table_slurry$VS[summary_table_slurry$experiment == "6" & summary_table_slurry$id == "PS-L"]
+ref_6_PSL_TN <- summary_table_slurry$TN[summary_table_slurry$experiment == "6" & summary_table_slurry$id == "PS-L"]
+ref_6_PSL_TAN <- summary_table_slurry$TAN[summary_table_slurry$experiment == "6" & summary_table_slurry$id == "PS-L"]
+
+# Calculate TAN corrections from raw data
+ref_7_ADF_TAN <- data_slurry %>% 
+  filter(experiment == "7", id == "AD-F") %>% 
+  summarise(TAN = paste0(round(mean(NH3_N, na.rm = TRUE) / 1.1, 2))) %>% 
+  pull(TAN)
+
+ref_3_ADL_102_TAN <- data_slurry %>% 
+  filter(experiment == "3", id == "AD-L") %>% 
+  summarise(TAN = paste0(round(mean(NH3_N, na.rm = TRUE) / 1.02, 2))) %>% 
+  pull(TAN)
+
+ref_3_ADL_11_TAN <- data_slurry %>% 
+  filter(experiment == "3", id == "AD-L") %>% 
+  summarise(TAN = paste0(round(mean(NH3_N, na.rm = TRUE) / 1.1, 2))) %>% 
+  pull(TAN)
+
+ref_6_PSL_102_TAN <- data_slurry %>% 
+  filter(experiment == "6", id == "PS-L") %>% 
+  summarise(TAN = paste0(round(mean(NH3_N, na.rm = TRUE) / 1.02, 2))) %>% 
+  pull(TAN)
+
+ref_6_PSL_11_TAN <- data_slurry %>% 
+  filter(experiment == "6", id == "PS-L") %>% 
+  summarise(TAN = paste0(round(mean(NH3_N, na.rm = TRUE) / 1.1, 2))) %>% 
+  pull(TAN)
+
+# Substitute values in summary table
+summary_table_slurry <- summary_table_slurry %>%
+  mutate(
+    # Substitute DM, VS, TN for experiments 7, 8, 9
+    DM = case_when(
+      experiment == "7" & id == "AD-FB" ~ ref_7_ADF_DM,
+      experiment == "8" ~ ref_3_ADL_DM,
+      experiment == "9" ~ ref_6_PSL_DM,
+      TRUE ~ DM
+    ),
+    VS = case_when(
+      experiment == "7" & id == "AD-FB" ~ ref_7_ADF_VS,
+      experiment == "8" ~ ref_3_ADL_VS,
+      experiment == "9" ~ ref_6_PSL_VS,
+      TRUE ~ VS
+    ),
+    TN = case_when(
+      experiment == "7" & id == "AD-FB" ~ ref_7_ADF_TN,
+      experiment == "8" ~ ref_3_ADL_TN,
+      experiment == "9" ~ ref_6_PSL_TN,
+      TRUE ~ TN
+    ),
+    # Substitute corrected TAN values
+    TAN = case_when(
+      experiment == "7" & id == "AD-FB" ~ ref_7_ADF_TAN,
+      experiment == "8" & id == "AD-LB1" ~ ref_3_ADL_102_TAN,
+      experiment == "8" & id == "AD-LB2" ~ ref_3_ADL_11_TAN,
+      experiment == "9" & id == "PS-LB1" ~ ref_6_PSL_102_TAN,
+      experiment == "9" & id == "PS-LB2" ~ ref_6_PSL_11_TAN,
+      experiment == "8" & id == "AD-L" ~ ref_3_ADL_TAN,
+      experiment == "9" & id == "PS-L" ~ ref_6_PSL_TAN,
+      
+      TRUE ~ TAN
+    )
+  )
+View(summary_table_slurry)
