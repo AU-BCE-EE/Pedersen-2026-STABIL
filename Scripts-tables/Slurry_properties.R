@@ -2,7 +2,7 @@ data_slurry$experiment <- as.character(data_slurry$experiment)
 
 # Create summary table first
 summary_table_slurry <- data_slurry %>%
-  group_by(experiment, id) %>%
+  group_by(experiment, id, new.ID) %>%
   summarise(
     pH = paste0(round(mean(pH, na.rm = TRUE), 2), 
                 " ± ", 

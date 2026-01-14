@@ -6,11 +6,22 @@ fsumm <- idat[, .(j.rel.mn  = mean(j.rel),
               , by = list(new.ID, treat, cta)]
 
 # cumulative emissions: 
-isumm <- idat[, .(e.cum.final = max(e.cum), 
+idat1 <- idat[! new.ID == 'Trial 5', ]
+idat2 <- idat[new.ID == 'Trial 5', ]
+
+isumm1 <- idat1[, .(e.cum.final = max(e.cum), 
                      e.rel.final = max(e.rel),
-                     e.cum.130 = approx(cta, e.cum, xout = 128)$y,
-                     e.rel.130 = approx(cta, e.rel, xout = 128)$y
+                     e.cum.130 = approx(cta, e.cum, xout = 135)$y,
+                     e.rel.130 = approx(cta, e.rel, xout = 135)$y
                      ), by = list(new.ID, treat, pmid)]
+
+isumm2 <- idat2[, .(e.cum.final = max(e.cum), 
+                    e.rel.final = max(e.rel),
+                    e.cum.130 = approx(cta, e.cum, xout = 125)$y,
+                    e.rel.130 = approx(cta, e.rel, xout = 125)$y
+), by = list(new.ID, treat, pmid)]
+
+isumm <- rbind(isumm1, isumm2)
 
 # temperature data 
 wsumm <- idat[, .(dt = t.start.p[1],

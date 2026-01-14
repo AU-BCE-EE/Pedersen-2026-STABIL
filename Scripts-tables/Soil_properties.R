@@ -2,7 +2,7 @@
 data_soil$experiment<-as.character(data_soil$experiment)
 # Create summary table grouped by experiment
 summary_table_soil <- data_soil %>%
-  group_by(experiment) %>%
+  group_by(experiment, new.ID) %>%
   summarise(
     pH = paste0(round(mean(pH, na.rm = TRUE), 2), 
                 " ± ", 
