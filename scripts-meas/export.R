@@ -11,3 +11,8 @@ esummA <- esumm[ , c('new.ID', 'treat', 'cum.emis.mn', 'e.rel.130.n')]
 
 # tables with cumulative emission 
 write.csv(esummA, '../output/cum.emis.csv', row.names = FALSE)
+
+
+# table with cumulative emissions for each plot (for stats)
+
+write.csv(isumm[, c('new.ID', 'treat', 'e.rel.130')], '../output/cum.emis.stats.csv', row.names = FALSE)
