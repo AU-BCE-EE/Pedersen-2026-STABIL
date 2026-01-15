@@ -13,4 +13,4 @@ IDs <- c(`1` =  'Trial 1',
          `8` =  'Trial 8',
          `9` =  'Trial 9')
 
-pdat[, new.ID := IDs[exper]]
+pdat[, trial := IDs[exper]]

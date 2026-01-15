@@ -1,0 +1,53 @@
+---
+title: 'Separation stats'
+author: Sasha and Flavia
+---
+
+Plot data
+
+```{r}
+ggplot(isumm, aes(as.integer(factor(treat)), e.rel.130, color = trial)) + 
+  geom_point() + 
+  geom_line() + 
+  facet_wrap(~ slurry.type, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+
+Linear models
+
+```{r}
+mod1 <- lmer(e.rel.130 ~ separation * slurry.type + (1|trial), data = isumm)
+summary(mod1)
+anova(mod1)
+```
+
+```{r}
+plot(mod1)
+qqnorm(resid(mod1))
+qqline(resid(mod1))
+```
+
+```{r}
+mod2 <- lmer(e.rel.130 ~ separation * slurry.type + (1 + separation | trial), data = isumm)
+summary(mod2)
+anova(mod2)
+```
+
+```{r}
+mns <- emmeans(mod1, ~ separation | slurry.type)
+cld(mns) 
+```
+
+```{r}
+mns <- emmeans(mod2, ~ separation | slurry.type)
+cld(mns) 
+```
+
+# Conclusion:
+* Separation affects emission
+* The reduction for the solid fraction differs between slurry types
+* The liquid fraction has lower emission than whole slurry for both, and the reduction is not clearly different between slurry types
+* For digestate, both liquid and solid fractions have lower emission than whole slurry, but are not clearly different from each other, if we consider that the separation effect varies among trials (and it clearly does, from mod2)
+* For pig slurry, whole slurry and the solid fraction are not clearly different, but liquid is clearly different (lower) than both
