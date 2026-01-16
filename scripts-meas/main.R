@@ -1,3 +1,5 @@
+# Data analysis for ammonia emission measurements 
+
 rm(list = ls())
 
 source('functions.R')

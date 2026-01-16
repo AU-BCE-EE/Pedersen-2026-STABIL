@@ -3,22 +3,61 @@ title: 'Separation stats'
 author: Sasha and Flavia
 ---
 
-Plot data
+# Plot data
 
 ```{r}
-ggplot(isumm, aes(as.integer(factor(treat)), e.rel.130, color = trial)) + 
+ggplot(isumm, aes(treat, e.rel.130, color = trial)) + 
   geom_point() + 
-  geom_line() + 
+  geom_line(aes(group = trial)) + 
   facet_wrap(~ slurry.type, scales = 'free_x') + 
   theme_bw() + 
   labs(y = 'Loss (frac. of TAN)') + 
   theme(legend.title = element_blank())
 ```
 
-Linear models
+Through means.
 
 ```{r}
-mod1 <- lmer(e.rel.130 ~ separation * slurry.type + (1|trial), data = isumm)
+ggplot(isumm, aes(treat, e.rel.130, color = trial)) + 
+  geom_line() + 
+  geom_point() + 
+  stat_summary(aes(group = trial), fun = mean, geom = 'line') +
+  facet_wrap(~ slurry.type, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+
+
+```{r}
+ggplot(isumm, aes(as.integer(factor(treat)), e.rel.130, color = trial)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ slurry.type, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+
+```{r}
+ggplot(isumm, aes(treat, e.rel.130, color = trial)) + 
+  geom_point() + 
+  geom_line() + 
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ slurry.type, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+
+
+# Mixed-effects models
+
+## Model 1
+First ignore any variation in separation response among trials (plot shows evidence that we should *not* ignore it).
+
+```{r}
+mod1 <- lmer(e.rel.130 ~ separation * slurry.type + (1|trial), data = isumm, REML = FALSE)
 summary(mod1)
 anova(mod1)
 ```
@@ -29,21 +68,110 @@ qqnorm(resid(mod1))
 qqline(resid(mod1))
 ```
 
+## Model 2
+Now include this random separation effect across trials.
+
 ```{r}
-mod2 <- lmer(e.rel.130 ~ separation * slurry.type + (1 + separation | trial), data = isumm)
+mod2 <- lmer(e.rel.130 ~ separation * slurry.type + (1 + separation | trial), data = isumm, REML = FALSE)
 summary(mod2)
 anova(mod2)
 ```
 
+## Model 2 hypothsis tests
+
+We can determine if there is evidence for it with a likelihood ratio test.
+
 ```{r}
-mns <- emmeans(mod1, ~ separation | slurry.type)
-cld(mns) 
+anova(mod1, mod2, test = 'Chisq')
+```
+
+Strong evidence, with p value below 1E-6.
+
+For interaction term:
+
+```{r}
+mod2b <- lmer(e.rel.130 ~ separation + slurry.type + (1 + separation | trial), data = isumm, REML = FALSE)
+anova(mod2, mod2b, test = 'Chisq')
+```
+
+p < 0.01, pretty clear.
+
+And it is clear from the plots that there is no consistent difference between
+
+* solid and liquid fractions from AD,
+* raw and solid from pig slurry.
+
+The only thing not clear from the combination of these results and the plots is if.
+
+* AD liquid fraction is in fact lower than raw AD, 
+* pig liquid fraction is in fact lower than raw pig slurry. 
+
+We can test exactly these and only these by grouping factor levels and using likelihood ratio tests.
+
+
+```{r}
+isumm[, separation.psg := separation]
+isumm[slurry.type == 'PS' & separation == 'Liquid', separation.psg := 'Unsep']
+table(isumm[, .(slurry.type, separation, trial)])
+table(isumm[, .(slurry.type, separation.psg, trial)])
 ```
 
 ```{r}
-mns <- emmeans(mod2, ~ separation | slurry.type)
-cld(mns) 
+isumm[, separation.adg := separation]
+isumm[slurry.type == 'AD' & separation == 'Liquid', separation.psg := 'Unsep']
+table(isumm[, .(slurry.type, separation, trial)])
+table(isumm[, .(slurry.type, separation.adg, trial)])
 ```
+
+```{r}
+mod2c <- lmer(e.rel.130 ~ separation.psg + slurry.type + (1 + separation.psg | trial), data = isumm, REML = FALSE)
+mod2d <- lmer(e.rel.130 ~ separation.adg + slurry.type + (1 + separation.adg | trial), data = isumm, REML = FALSE)
+anova(mod2, mod2c, test = 'Chisq')
+anova(mod2, mod2d, test = 'Chisq')
+```
+
+Singular fit is problematic for comparison.
+
+```{r}
+mod1c <- lmer(e.rel.130 ~ separation.psg + slurry.type + (1 | trial), data = isumm, REML = FALSE)
+mod1d <- lmer(e.rel.130 ~ separation.adg + slurry.type + (1 | trial), data = isumm, REML = FALSE)
+anova(mod1, mod1c, test = 'Chisq')
+anova(mod1, mod1d, test = 'Chisq')
+```
+
+No better.
+Try subset instead.
+
+```{r}
+isummul <- isumm[separation %in% c('Unsep', 'Liquid')]
+```
+
+```{r}
+mod3 <- lmer(e.rel.130 ~ separation * slurry.type + (1|trial), data = isummul, REML = FALSE)
+summary(mod3)
+anova(mod3)
+```
+
+Check for interaction now.
+
+```{r}
+mod3b <- lmer(e.rel.130 ~ separation + slurry.type + (1|trial), data = isummul, REML = FALSE)
+anova(mod3, mod3b, test = 'Chisq')
+```
+
+Nope!
+So solid fraction response drives interaction.
+That is obvious from the plots.
+
+So we can easily test for overall unsep vs. liquid effect.
+
+```{r}
+mod3c <- lmer(e.rel.130 ~ slurry.type + (1|trial), data = isummul, REML = FALSE)
+summary(mod3c)
+anova(mod3, mod3c, test = 'Chisq')
+```
+
+We still have the singular fit issue, but a very clear effect.
 
 # Conclusion:
 * Separation affects emission
