@@ -173,7 +173,7 @@ anova(mod3, mod3c, test = 'Chisq')
 
 We still have the singular fit issue, but a very clear effect.
 
-# Conclusion:
+# Conclusions:
 * Separation affects emission
 * The reduction for the solid fraction differs between slurry types
 * The liquid fraction has lower emission than whole slurry for both, and the reduction is not clearly different between slurry types
