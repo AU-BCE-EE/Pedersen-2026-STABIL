@@ -8,6 +8,7 @@ library(lme4)
 library(nlme)
 #library(gridExtra)
 library(rmarkdown)
+library(knitr)
 #library(scales)
 #library(patchwork)
 

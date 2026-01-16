@@ -10,4 +10,5 @@ source('clean.R')
 source('export.R')
 source('plot.R')
 render('stats.Rmd')
+knit('stats.Rmd')
 
