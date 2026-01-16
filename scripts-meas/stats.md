@@ -151,28 +151,24 @@ mns <- emmeans(mod1, ~ separation | slurry.type)
 ## Cannot use mode = "kenward-roger" because *pbkrtest* package is not installed
 ```
 
-```
-## Cannot use mode = "satterthwaite" because *lmerTest* package is not installed
-```
-
 ``` r
 cld(mns) 
 ```
 
 ```
 ## slurry.type = AD:
-##  separation emmean     SE  df asymp.LCL asymp.UCL .group
-##  Solid      0.0619 0.0293 Inf   0.00451     0.119  1    
-##  Liquid     0.1780 0.0293 Inf   0.12058     0.235   2   
-##  Unsep      0.4241 0.0310 Inf   0.36330     0.485    3  
+##  separation emmean     SE   df lower.CL upper.CL .group
+##  Solid      0.0619 0.0293 23.9  0.00144    0.122  1    
+##  Liquid     0.1780 0.0293 23.9  0.11752    0.238   2   
+##  Unsep      0.4241 0.0310 26.6  0.36041    0.488    3  
 ## 
 ## slurry.type = PS:
-##  separation emmean     SE  df asymp.LCL asymp.UCL .group
-##  Liquid     0.0540 0.0293 Inf  -0.00342     0.111  1    
-##  Unsep      0.2323 0.0293 Inf   0.17486     0.290   2   
-##  Solid      0.3678 0.0293 Inf   0.31038     0.425    3  
+##  separation emmean     SE   df lower.CL upper.CL .group
+##  Liquid     0.0540 0.0293 23.9 -0.00648    0.114  1    
+##  Unsep      0.2323 0.0293 23.9  0.17180    0.293   2   
+##  Solid      0.3678 0.0293 23.9  0.30732    0.428    3  
 ## 
-## Degrees-of-freedom method: asymptotic 
+## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95 
 ## P value adjustment: tukey method for comparing a family of 3 estimates 
 ## significance level used: alpha = 0.05 
@@ -190,28 +186,24 @@ mns <- emmeans(mod2, ~ separation | slurry.type)
 ## Cannot use mode = "kenward-roger" because *pbkrtest* package is not installed
 ```
 
-```
-## Cannot use mode = "satterthwaite" because *lmerTest* package is not installed
-```
-
 ``` r
 cld(mns) 
 ```
 
 ```
 ## slurry.type = AD:
-##  separation emmean     SE  df asymp.LCL asymp.UCL .group
-##  Solid      0.0619 0.0680 Inf   -0.0713     0.195  1    
-##  Liquid     0.1780 0.0380 Inf    0.1035     0.252  1    
-##  Unsep      0.4212 0.0457 Inf    0.3316     0.511   2   
+##  separation emmean     SE   df lower.CL upper.CL .group
+##  Solid      0.0619 0.0680 4.00  -0.1268    0.251  1    
+##  Liquid     0.1780 0.0380 4.00   0.0725    0.283  12   
+##  Unsep      0.4212 0.0457 4.11   0.2956    0.547   2   
 ## 
 ## slurry.type = PS:
-##  separation emmean     SE  df asymp.LCL asymp.UCL .group
-##  Liquid     0.0540 0.0380 Inf   -0.0205     0.128  1    
-##  Unsep      0.2323 0.0454 Inf    0.1433     0.321   2   
-##  Solid      0.3678 0.0680 Inf    0.2346     0.501   2   
+##  separation emmean     SE   df lower.CL upper.CL .group
+##  Liquid     0.0540 0.0380 4.00  -0.0515    0.159  1    
+##  Unsep      0.2323 0.0454 3.99   0.1062    0.358  1    
+##  Solid      0.3678 0.0680 4.00   0.1791    0.556  1    
 ## 
-## Degrees-of-freedom method: asymptotic 
+## Degrees-of-freedom method: satterthwaite 
 ## Confidence level used: 0.95 
 ## P value adjustment: tukey method for comparing a family of 3 estimates 
 ## significance level used: alpha = 0.05 
