@@ -118,7 +118,7 @@ table(isumm[, .(slurry.type, separation.psg, trial)])
 
 ```{r}
 isumm[, separation.adg := separation]
-isumm[slurry.type == 'AD' & separation == 'Liquid', separation.psg := 'Unsep']
+isumm[slurry.type == 'AD' & separation == 'Liquid', separation.adg := 'Unsep']
 table(isumm[, .(slurry.type, separation, trial)])
 table(isumm[, .(slurry.type, separation.adg, trial)])
 ```
