@@ -1,12 +1,15 @@
 ---
-title: 'Separation stats'
-author: Sasha and Flavia
+title: "Separation stats"
+author: "Sasha and Flavia"
+output:
+  html_document:
+    df_print: paged
 ---
 
 # Plot data
 
 ```{r}
-ggplot(isumm, aes(treat, e.rel.130, color = trial)) + 
+ggplot(statsumm, aes(treat, e.rel.130, color = trial)) + 
   geom_point() + 
   geom_line(aes(group = trial)) + 
   facet_wrap(~ slurry.type, scales = 'free_x') + 
@@ -18,7 +21,7 @@ ggplot(isumm, aes(treat, e.rel.130, color = trial)) +
 Through means.
 
 ```{r}
-ggplot(isumm, aes(treat, e.rel.130, color = trial)) + 
+ggplot(statsumm, aes(treat, e.rel.130, color = trial)) + 
   geom_line() + 
   geom_point() + 
   stat_summary(aes(group = trial), fun = mean, geom = 'line') +
@@ -30,7 +33,7 @@ ggplot(isumm, aes(treat, e.rel.130, color = trial)) +
 
 
 ```{r}
-ggplot(isumm, aes(as.integer(factor(treat)), e.rel.130, color = trial)) + 
+ggplot(statsumm, aes(as.integer(factor(treat)), e.rel.130, color = trial)) + 
   geom_point() + 
   geom_smooth(se = FALSE) +
   facet_wrap(~ slurry.type, scales = 'free_x') + 
@@ -40,7 +43,7 @@ ggplot(isumm, aes(as.integer(factor(treat)), e.rel.130, color = trial)) +
 ```
 
 ```{r}
-ggplot(isumm, aes(treat, e.rel.130, color = trial)) + 
+ggplot(statsumm, aes(treat, e.rel.130, color = trial)) + 
   geom_point() + 
   geom_line() + 
   geom_smooth(se = FALSE) +
@@ -57,7 +60,7 @@ ggplot(isumm, aes(treat, e.rel.130, color = trial)) +
 First ignore any variation in separation response among trials (plot shows evidence that we should *not* ignore it).
 
 ```{r}
-mod1 <- lmer(e.rel.130 ~ separation * slurry.type + (1|trial), data = isumm, REML = FALSE)
+mod1 <- lmer(e.rel.130 ~ separation * slurry.type + (1|trial), data = statsumm, REML = FALSE)
 summary(mod1)
 anova(mod1)
 ```
@@ -72,9 +75,11 @@ qqline(resid(mod1))
 Now include this random separation effect across trials.
 
 ```{r}
-mod2 <- lmer(e.rel.130 ~ separation * slurry.type + (1 + separation | trial), data = isumm, REML = FALSE)
+mod2 <- lmer(e.rel.130 ~ separation * slurry.type + (1 + separation | trial), data = statsumm, REML = FALSE)
 summary(mod2)
 anova(mod2)
+mod2
+
 ```
 
 ## Model 2 hypothsis tests
@@ -90,7 +95,7 @@ Strong evidence, with p value below 1E-6.
 For interaction term:
 
 ```{r}
-mod2b <- lmer(e.rel.130 ~ separation + slurry.type + (1 + separation | trial), data = isumm, REML = FALSE)
+mod2b <- lmer(e.rel.130 ~ separation + slurry.type + (1 + separation | trial), data = statsumm, REML = FALSE)
 anova(mod2, mod2b, test = 'Chisq')
 ```
 
@@ -110,22 +115,22 @@ We can test exactly these and only these by grouping factor levels and using lik
 
 
 ```{r}
-isumm[, separation.psg := separation]
-isumm[slurry.type == 'PS' & separation == 'Liquid', separation.psg := 'Unsep']
-table(isumm[, .(slurry.type, separation, trial)])
-table(isumm[, .(slurry.type, separation.psg, trial)])
+statsumm[, separation.psg := separation]
+statsumm[slurry.type == 'PS' & separation == 'Liquid', separation.psg := 'Unsep']
+table(statsumm[, .(slurry.type, separation, trial)])
+table(statsumm[, .(slurry.type, separation.psg, trial)])
 ```
 
 ```{r}
-isumm[, separation.adg := separation]
-isumm[slurry.type == 'AD' & separation == 'Liquid', separation.psg := 'Unsep']
-table(isumm[, .(slurry.type, separation, trial)])
-table(isumm[, .(slurry.type, separation.adg, trial)])
+statsumm[, separation.adg := separation]
+statsumm[slurry.type == 'AD' & separation == 'Liquid', separation.psg := 'Unsep']
+table(statsumm[, .(slurry.type, separation, trial)])
+table(statsumm[, .(slurry.type, separation.adg, trial)])
 ```
 
 ```{r}
-mod2c <- lmer(e.rel.130 ~ separation.psg + slurry.type + (1 + separation.psg | trial), data = isumm, REML = FALSE)
-mod2d <- lmer(e.rel.130 ~ separation.adg + slurry.type + (1 + separation.adg | trial), data = isumm, REML = FALSE)
+mod2c <- lmer(e.rel.130 ~ separation.psg + slurry.type + (1 + separation.psg | trial), data = statsumm, REML = FALSE)
+mod2d <- lmer(e.rel.130 ~ separation.adg + slurry.type + (1 + separation.adg | trial), data = statsumm, REML = FALSE)
 anova(mod2, mod2c, test = 'Chisq')
 anova(mod2, mod2d, test = 'Chisq')
 ```
@@ -133,8 +138,8 @@ anova(mod2, mod2d, test = 'Chisq')
 Singular fit is problematic for comparison.
 
 ```{r}
-mod1c <- lmer(e.rel.130 ~ separation.psg + slurry.type + (1 | trial), data = isumm, REML = FALSE)
-mod1d <- lmer(e.rel.130 ~ separation.adg + slurry.type + (1 | trial), data = isumm, REML = FALSE)
+mod1c <- lmer(e.rel.130 ~ separation.psg + slurry.type + (1 | trial), data = statsumm, REML = FALSE)
+mod1d <- lmer(e.rel.130 ~ separation.adg + slurry.type + (1 | trial), data = statsumm, REML = FALSE)
 anova(mod1, mod1c, test = 'Chisq')
 anova(mod1, mod1d, test = 'Chisq')
 ```
@@ -143,11 +148,11 @@ No better.
 Try subset instead.
 
 ```{r}
-isummul <- isumm[separation %in% c('Unsep', 'Liquid')]
+statsummul <- statsumm[separation %in% c('Unsep', 'Liquid')]
 ```
 
 ```{r}
-mod3 <- lmer(e.rel.130 ~ separation * slurry.type + (1|trial), data = isummul, REML = FALSE)
+mod3 <- lmer(e.rel.130 ~ separation * slurry.type + (1|trial), data = statsummul, REML = FALSE)
 summary(mod3)
 anova(mod3)
 ```
@@ -155,7 +160,7 @@ anova(mod3)
 Check for interaction now.
 
 ```{r}
-mod3b <- lmer(e.rel.130 ~ separation + slurry.type + (1|trial), data = isummul, REML = FALSE)
+mod3b <- lmer(e.rel.130 ~ separation + slurry.type + (1|trial), data = statsummul, REML = FALSE)
 anova(mod3, mod3b, test = 'Chisq')
 ```
 
@@ -166,9 +171,9 @@ That is obvious from the plots.
 So we can easily test for overall unsep vs. liquid effect.
 
 ```{r}
-mod3c <- lmer(e.rel.130 ~ slurry.type + (1|trial), data = isummul, REML = FALSE)
+mod3c <- lmer(e.rel.130 ~ slurry.type + (1|trial), data = statsummul, REML = FALSE)
 summary(mod3c)
-anova(mod3, mod3c, test = 'Chisq')
+anova(mod3c, mod3b, test = 'Chisq')
 ```
 
 We still have the singular fit issue, but a very clear effect.

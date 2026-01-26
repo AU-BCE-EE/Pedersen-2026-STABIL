@@ -1,0 +1,1013 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Separation stats},
+  pdfauthor={Sasha and Flavia},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Separation stats}
+\author{Sasha and Flavia}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Plot data}\label{plot-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(isumm, }\FunctionTok{aes}\NormalTok{(treat, e.rel}\FloatTok{.130}\NormalTok{, }\AttributeTok{color =}\NormalTok{ trial)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ trial)) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ slurry.type, }\AttributeTok{scales =} \StringTok{\textquotesingle{}free\_x\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{\textquotesingle{}Loss (frac. of TAN)\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{stats_files/figure-latex/unnamed-chunk-1-1.pdf}}
+
+Through means.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(isumm, }\FunctionTok{aes}\NormalTok{(treat, e.rel}\FloatTok{.130}\NormalTok{, }\AttributeTok{color =}\NormalTok{ trial)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{stat\_summary}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ trial), }\AttributeTok{fun =}\NormalTok{ mean, }\AttributeTok{geom =} \StringTok{\textquotesingle{}line\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ slurry.type, }\AttributeTok{scales =} \StringTok{\textquotesingle{}free\_x\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{\textquotesingle{}Loss (frac. of TAN)\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{stats_files/figure-latex/unnamed-chunk-2-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(isumm, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{as.integer}\NormalTok{(}\FunctionTok{factor}\NormalTok{(treat)), e.rel}\FloatTok{.130}\NormalTok{, }\AttributeTok{color =}\NormalTok{ trial)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ slurry.type, }\AttributeTok{scales =} \StringTok{\textquotesingle{}free\_x\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{\textquotesingle{}Loss (frac. of TAN)\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 0.99
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 1.01
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 0
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : There are other near singularities as well. 1.0201
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 0.99
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 1.01
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 0
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : There are other near singularities as well. 1.0201
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 0.99
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 2.01
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 0
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : There are other near singularities as well. 1.0201
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 3.99
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 1.01
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 0
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : There are other near singularities as well. 1.0201
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 3.99
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 1.01
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 0
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : There are other near singularities as well. 1.0201
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 3.99
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 1.01
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 0
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : There are other near singularities as well. 1.0201
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{stats_files/figure-latex/unnamed-chunk-3-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(isumm, }\FunctionTok{aes}\NormalTok{(treat, e.rel}\FloatTok{.130}\NormalTok{, }\AttributeTok{color =}\NormalTok{ trial)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ slurry.type, }\AttributeTok{scales =} \StringTok{\textquotesingle{}free\_x\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{\textquotesingle{}Loss (frac. of TAN)\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{stats_files/figure-latex/unnamed-chunk-4-1.pdf}}
+
+\section{Mixed-effects models}\label{mixed-effects-models}
+
+\subsection{Model 1}\label{model-1}
+
+First ignore any variation in separation response among trials (plot
+shows evidence that we should \emph{not} ignore it).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod1 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation }\SpecialCharTok{*}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{|}\NormalTok{trial), }\AttributeTok{data =}\NormalTok{ isumm, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## boundary (singular) fit: see help('isSingular')
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by maximum likelihood  ['lmerMod']
+## Formula: e.rel.130 ~ separation * slurry.type + (1 | trial)
+##    Data: isumm
+## 
+##       AIC       BIC    logLik -2*log(L)  df.resid 
+##     -99.3     -83.5      57.6    -115.3        45 
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.10599 -0.59951 -0.06593  0.64664  2.46112 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  trial    (Intercept) 1.145e-21 3.384e-11
+##  Residual             6.653e-03 8.157e-02
+## Number of obs: 53, groups:  trial, 6
+## 
+## Fixed effects:
+##                                Estimate Std. Error t value
+## (Intercept)                     0.42400    0.02884  14.703
+## separationLiquid               -0.24602    0.03963  -6.207
+## separationSolid                -0.36210    0.03963  -9.136
+## slurry.typePS                  -0.19174    0.03963  -4.838
+## separationLiquid:slurry.typePS  0.06774    0.05522   1.227
+## separationSolid:slurry.typePS   0.49762    0.05522   9.012
+## 
+## Correlation of Fixed Effects:
+##             (Intr) sprtnL sprtnS slr.PS sL:.PS
+## separatnLqd -0.728                            
+## separatnSld -0.728  0.529                     
+## slrry.typPS -0.728  0.529  0.529              
+## sprtnLq:.PS  0.522 -0.718 -0.380 -0.718       
+## sprtnSl:.PS  0.522 -0.380 -0.718 -0.718  0.515
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see help('isSingular')
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+##                        npar  Sum Sq Mean Sq F value
+## separation                2 0.37288 0.18644 28.0230
+## slurry.type               1 0.00000 0.00000  0.0005
+## separation:slurry.type    2 0.64593 0.32296 48.5437
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{stats_files/figure-latex/unnamed-chunk-6-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{resid}\NormalTok{(mod1))}
+\FunctionTok{qqline}\NormalTok{(}\FunctionTok{resid}\NormalTok{(mod1))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{stats_files/figure-latex/unnamed-chunk-6-2.pdf}}
+
+\subsection{Model 2}\label{model-2}
+
+Now include this random separation effect across trials.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod2 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation }\SpecialCharTok{*}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ separation }\SpecialCharTok{|}\NormalTok{ trial), }\AttributeTok{data =}\NormalTok{ isumm, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(mod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by maximum likelihood  ['lmerMod']
+## Formula: e.rel.130 ~ separation * slurry.type + (1 + separation | trial)
+##    Data: isumm
+## 
+##       AIC       BIC    logLik -2*log(L)  df.resid 
+##    -128.2    -102.6      77.1    -154.2        40 
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.61123 -0.52248 -0.04807  0.57283  2.47528 
+## 
+## Random effects:
+##  Groups   Name             Variance Std.Dev. Corr       
+##  trial    (Intercept)      0.003554 0.05961             
+##           separationLiquid 0.008350 0.09138  -0.88      
+##           separationSolid  0.013958 0.11815  -0.63  0.22
+##  Residual                  0.001752 0.04185             
+## Number of obs: 53, groups:  trial, 6
+## 
+## Fixed effects:
+##                                Estimate Std. Error t value
+## (Intercept)                     0.42071    0.03754  11.207
+## separationLiquid               -0.24273    0.05659  -4.289
+## separationSolid                -0.35881    0.07122  -5.038
+## slurry.typePS                  -0.18846    0.05281  -3.569
+## separationLiquid:slurry.typePS  0.06446    0.07985   0.807
+## separationSolid:slurry.typePS   0.49433    0.10057   4.915
+## 
+## Correlation of Fixed Effects:
+##             (Intr) sprtnL sprtnS slr.PS sL:.PS
+## separatnLqd -0.859                            
+## separatnSld -0.636  0.252                     
+## slrry.typPS -0.711  0.611  0.452              
+## sprtnLq:.PS  0.609 -0.709 -0.179 -0.858       
+## sprtnSl:.PS  0.451 -0.179 -0.708 -0.635  0.250
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+##                        npar   Sum Sq  Mean Sq F value
+## separation                2 0.049490 0.024745 14.1263
+## slurry.type               1 0.013629 0.013629  7.7807
+## separation:slurry.type    2 0.042650 0.021325 12.1740
+\end{verbatim}
+
+\subsection{Model 2 hypothsis tests}\label{model-2-hypothsis-tests}
+
+We can determine if there is evidence for it with a likelihood ratio
+test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod1, mod2, }\AttributeTok{test =} \StringTok{\textquotesingle{}Chisq\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: isumm
+## Models:
+## mod1: e.rel.130 ~ separation * slurry.type + (1 | trial)
+## mod2: e.rel.130 ~ separation * slurry.type + (1 + separation | trial)
+##      npar      AIC      BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)    
+## mod1    8  -99.264  -83.502 57.632   -115.26                         
+## mod2   13 -128.247 -102.633 77.124   -154.25 38.983  5  2.394e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Strong evidence, with p value below 1E-6.
+
+For interaction term:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod2b }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation }\SpecialCharTok{+}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ separation }\SpecialCharTok{|}\NormalTok{ trial), }\AttributeTok{data =}\NormalTok{ isumm, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{anova}\NormalTok{(mod2, mod2b, }\AttributeTok{test =} \StringTok{\textquotesingle{}Chisq\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: isumm
+## Models:
+## mod2b: e.rel.130 ~ separation + slurry.type + (1 + separation | trial)
+## mod2: e.rel.130 ~ separation * slurry.type + (1 + separation | trial)
+##       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)   
+## mod2b   11 -122.51 -100.84 72.255   -144.51                        
+## mod2    13 -128.25 -102.63 77.124   -154.25 9.7378  2   0.007682 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+p \textless{} 0.01, pretty clear.
+
+And it is clear from the plots that there is no consistent difference
+between
+
+\begin{itemize}
+\tightlist
+\item
+  solid and liquid fractions from AD,
+\item
+  raw and solid from pig slurry.
+\end{itemize}
+
+The only thing not clear from the combination of these results and the
+plots is if.
+
+\begin{itemize}
+\tightlist
+\item
+  AD liquid fraction is in fact lower than raw AD,
+\item
+  pig liquid fraction is in fact lower than raw pig slurry.
+\end{itemize}
+
+We can test exactly these and only these by grouping factor levels and
+using likelihood ratio tests.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{isumm[, separation.psg }\SpecialCharTok{:=}\NormalTok{ separation]}
+\NormalTok{isumm[slurry.type }\SpecialCharTok{==} \StringTok{\textquotesingle{}PS\textquotesingle{}} \SpecialCharTok{\&}\NormalTok{ separation }\SpecialCharTok{==} \StringTok{\textquotesingle{}Liquid\textquotesingle{}}\NormalTok{, separation.psg }\SpecialCharTok{:=} \StringTok{\textquotesingle{}Unsep\textquotesingle{}}\NormalTok{]}
+\FunctionTok{table}\NormalTok{(isumm[, .(slurry.type, separation, trial)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , trial = Trial 1
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     3      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 2
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+## 
+## , , trial = Trial 3
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     3      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 4
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+## 
+## , , trial = Trial 5
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     2      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 6
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(isumm[, .(slurry.type, separation.psg, trial)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , trial = Trial 1
+## 
+##            separation.psg
+## slurry.type Unsep Liquid Solid
+##          AD     3      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 2
+## 
+##            separation.psg
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     6      0     3
+## 
+## , , trial = Trial 3
+## 
+##            separation.psg
+## slurry.type Unsep Liquid Solid
+##          AD     3      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 4
+## 
+##            separation.psg
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     6      0     3
+## 
+## , , trial = Trial 5
+## 
+##            separation.psg
+## slurry.type Unsep Liquid Solid
+##          AD     2      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 6
+## 
+##            separation.psg
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     6      0     3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{isumm[, separation.adg }\SpecialCharTok{:=}\NormalTok{ separation]}
+\NormalTok{isumm[slurry.type }\SpecialCharTok{==} \StringTok{\textquotesingle{}AD\textquotesingle{}} \SpecialCharTok{\&}\NormalTok{ separation }\SpecialCharTok{==} \StringTok{\textquotesingle{}Liquid\textquotesingle{}}\NormalTok{, separation.psg }\SpecialCharTok{:=} \StringTok{\textquotesingle{}Unsep\textquotesingle{}}\NormalTok{]}
+\FunctionTok{table}\NormalTok{(isumm[, .(slurry.type, separation, trial)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , trial = Trial 1
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     3      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 2
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+## 
+## , , trial = Trial 3
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     3      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 4
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+## 
+## , , trial = Trial 5
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     2      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 6
+## 
+##            separation
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(isumm[, .(slurry.type, separation.adg, trial)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , trial = Trial 1
+## 
+##            separation.adg
+## slurry.type Unsep Liquid Solid
+##          AD     3      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 2
+## 
+##            separation.adg
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+## 
+## , , trial = Trial 3
+## 
+##            separation.adg
+## slurry.type Unsep Liquid Solid
+##          AD     3      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 4
+## 
+##            separation.adg
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+## 
+## , , trial = Trial 5
+## 
+##            separation.adg
+## slurry.type Unsep Liquid Solid
+##          AD     2      3     3
+##          PS     0      0     0
+## 
+## , , trial = Trial 6
+## 
+##            separation.adg
+## slurry.type Unsep Liquid Solid
+##          AD     0      0     0
+##          PS     3      3     3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod2c }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation.psg }\SpecialCharTok{+}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ separation.psg }\SpecialCharTok{|}\NormalTok{ trial), }\AttributeTok{data =}\NormalTok{ isumm, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## boundary (singular) fit: see help('isSingular')
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod2d }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation.adg }\SpecialCharTok{+}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ separation.adg }\SpecialCharTok{|}\NormalTok{ trial), }\AttributeTok{data =}\NormalTok{ isumm, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{anova}\NormalTok{(mod2, mod2c, }\AttributeTok{test =} \StringTok{\textquotesingle{}Chisq\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: isumm
+## Models:
+## mod2c: e.rel.130 ~ separation.psg + slurry.type + (1 + separation.psg | trial)
+## mod2: e.rel.130 ~ separation * slurry.type + (1 + separation | trial)
+##       npar      AIC      BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)    
+## mod2c    7  -54.794  -41.002 34.397   -68.794                         
+## mod2    13 -128.247 -102.633 77.124  -154.247 85.454  6  2.659e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod2, mod2d, }\AttributeTok{test =} \StringTok{\textquotesingle{}Chisq\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: isumm
+## Models:
+## mod2d: e.rel.130 ~ separation.adg + slurry.type + (1 + separation.adg | trial)
+## mod2: e.rel.130 ~ separation * slurry.type + (1 + separation | trial)
+##       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)   
+## mod2d   11 -122.51 -100.84 72.255   -144.51                        
+## mod2    13 -128.25 -102.63 77.124   -154.25 9.7378  2   0.007682 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Singular fit is problematic for comparison.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod1c }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation.psg }\SpecialCharTok{+}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ trial), }\AttributeTok{data =}\NormalTok{ isumm, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## boundary (singular) fit: see help('isSingular')
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod1d }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation.adg }\SpecialCharTok{+}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ trial), }\AttributeTok{data =}\NormalTok{ isumm, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## boundary (singular) fit: see help('isSingular')
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod1, mod1c, }\AttributeTok{test =} \StringTok{\textquotesingle{}Chisq\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: isumm
+## Models:
+## mod1c: e.rel.130 ~ separation.psg + slurry.type + (1 | trial)
+## mod1: e.rel.130 ~ separation * slurry.type + (1 | trial)
+##       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)    
+## mod1c    5 -33.289 -23.438 21.645   -43.289                         
+## mod1     8 -99.264 -83.502 57.632  -115.264 71.975  3  1.612e-15 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod1, mod1d, }\AttributeTok{test =} \StringTok{\textquotesingle{}Chisq\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: isumm
+## Models:
+## mod1d: e.rel.130 ~ separation.adg + slurry.type + (1 | trial)
+## mod1: e.rel.130 ~ separation * slurry.type + (1 | trial)
+##       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)    
+## mod1d    6 -48.095 -36.274 30.048   -60.095                         
+## mod1     8 -99.264 -83.502 57.632  -115.264 55.169  2  1.048e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+No better. Try subset instead.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{isummul }\OtherTok{\textless{}{-}}\NormalTok{ isumm[separation }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Unsep\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Liquid\textquotesingle{}}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod3 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation }\SpecialCharTok{*}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{|}\NormalTok{trial), }\AttributeTok{data =}\NormalTok{ isummul, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(mod3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by maximum likelihood  ['lmerMod']
+## Formula: e.rel.130 ~ separation * slurry.type + (1 | trial)
+##    Data: isummul
+## 
+##       AIC       BIC    logLik -2*log(L)  df.resid 
+##     -76.2     -66.9      44.1     -88.2        29 
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.93249 -0.72894 -0.08274  0.56242  2.82139 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev.
+##  trial    (Intercept) 0.0005319 0.02306 
+##  Residual             0.0042883 0.06548 
+## Number of obs: 35, groups:  trial, 6
+## 
+## Fixed effects:
+##                                Estimate Std. Error t value
+## (Intercept)                     0.42616    0.02677  15.919
+## separationLiquid               -0.24818    0.03187  -7.787
+## slurry.typePS                  -0.19390    0.03702  -5.238
+## separationLiquid:slurry.typePS  0.06990    0.04437   1.575
+## 
+## Correlation of Fixed Effects:
+##             (Intr) sprtnL slr.PS
+## separatnLqd -0.632              
+## slrry.typPS -0.723  0.457       
+## sprtnLq:.PS  0.454 -0.718 -0.618
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+##                        npar  Sum Sq Mean Sq F value
+## separation                1 0.38217 0.38217  89.119
+## slurry.type               1 0.12623 0.12623  29.436
+## separation:slurry.type    1 0.01064 0.01064   2.482
+\end{verbatim}
+
+Check for interaction now.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod3b }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ separation }\SpecialCharTok{+}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{|}\NormalTok{trial), }\AttributeTok{data =}\NormalTok{ isummul, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{anova}\NormalTok{(mod3, mod3b, }\AttributeTok{test =} \StringTok{\textquotesingle{}Chisq\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: isummul
+## Models:
+## mod3b: e.rel.130 ~ separation + slurry.type + (1 | trial)
+## mod3: e.rel.130 ~ separation * slurry.type + (1 | trial)
+##       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)
+## mod3b    5 -75.866 -68.090 42.933   -85.866                     
+## mod3     6 -76.226 -66.894 44.113   -88.226 2.3593  1     0.1245
+\end{verbatim}
+
+Nope! So solid fraction response drives interaction. That is obvious
+from the plots.
+
+So we can easily test for overall unsep vs.~liquid effect.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod3c }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(e.rel}\FloatTok{.130} \SpecialCharTok{\textasciitilde{}}\NormalTok{ slurry.type }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{|}\NormalTok{trial), }\AttributeTok{data =}\NormalTok{ isummul, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## boundary (singular) fit: see help('isSingular')
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod3c)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by maximum likelihood  ['lmerMod']
+## Formula: e.rel.130 ~ slurry.type + (1 | trial)
+##    Data: isummul
+## 
+##       AIC       BIC    logLik -2*log(L)  df.resid 
+##     -36.9     -30.7      22.5     -44.9        31 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.6482 -0.7586 -0.2336  0.7202  2.2756 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  trial    (Intercept) 0.00000  0.0000  
+##  Residual             0.01623  0.1274  
+## Number of obs: 35, groups:  trial, 6
+## 
+## Fixed effects:
+##               Estimate Std. Error t value
+## (Intercept)    0.29375    0.03090   9.508
+## slurry.typePS -0.15064    0.04308  -3.497
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## slrry.typPS -0.717
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see help('isSingular')
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod3, mod3c, }\AttributeTok{test =} \StringTok{\textquotesingle{}Chisq\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: isummul
+## Models:
+## mod3c: e.rel.130 ~ slurry.type + (1 | trial)
+## mod3: e.rel.130 ~ separation * slurry.type + (1 | trial)
+##       npar     AIC     BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)    
+## mod3c    4 -36.912 -30.691 22.456   -44.912                         
+## mod3     6 -76.226 -66.894 44.113   -88.226 43.314  2  3.931e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+We still have the singular fit issue, but a very clear effect.
+
+\section{Conclusions:}\label{conclusions}
+
+\begin{itemize}
+\tightlist
+\item
+  Separation affects emission
+\item
+  The reduction for the solid fraction differs between slurry types
+\item
+  The liquid fraction has lower emission than whole slurry for both, and
+  the reduction is not clearly different between slurry types
+\item
+  For digestate, both liquid and solid fractions have lower emission
+  than whole slurry, but are not clearly different from each other, if
+  we consider that the separation effect varies among trials (and it
+  clearly does, from mod2)
+\item
+  For pig slurry, whole slurry and the solid fraction are not clearly
+  different, but liquid is clearly different (lower) than both
+\end{itemize}
+
+\end{document}

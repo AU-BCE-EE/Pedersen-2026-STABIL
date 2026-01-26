@@ -1,8 +1,8 @@
 
 
 # selecting relevant rows and trials
-df <- df[, c('new.ID', 'treat', 'e.rel.130')]
-df <- df[!(new.ID == 'Trial 7' | new.ID == 'Trial 8' | new.ID == 'Trial 9')]
+df <- df[, c('trial', 'treat', 'e.rel.130')]
+df <- df[!(trial == 'Trial 7' | trial == 'Trial 8' | trial == 'Trial 9')]
 
 
 df[, form := fcase(
@@ -14,6 +14,6 @@ df[, form := fcase(
 
 dw <- dcast(
   df,
-  new.ID ~ form,
+  trial~ form,
   value.var = c('e.rel.130')
 )

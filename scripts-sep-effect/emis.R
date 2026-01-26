@@ -30,7 +30,7 @@ dw <- cbind(dw, weighted_matrix_L, weighted_matrix_S)
 # long format for plotting: 
 dfl <- melt(
   dw,
-  id.vars = 'new.ID',
+  id.vars = 'trial',
   measure.vars = c('Unseparated', paste0('S Scenario ', 1:3), paste0('L Scenario ', 1:3)),
   variable.name = 'scenario',
   value.name = 'EF'

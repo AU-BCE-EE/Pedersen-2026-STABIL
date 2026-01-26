@@ -31,7 +31,7 @@ cols <- c(
 
 dfl$x_id <- factor(dfl$scenario_base, levels = c("Unseparated", 'Scenario 2', 'Scenario 1', 'Scenario 3'))
 
-dfl$x_plot <- interaction(dfl$new.ID, dfl$x_id, lex.order = TRUE)
+dfl$x_plot <- interaction(dfl$trial, dfl$x_id, lex.order = TRUE)
 
 dfl$trial_num <- as.numeric(sub("Scenario ", "", dfl$scenario_base))
 
@@ -44,7 +44,7 @@ ggplot(dfl, aes(x = x_plot, y = EF, fill = fill_id)) +
   scale_fill_manual(values = cols) +
   labs(y = "Ammonia emission (frac. TAN)") +
   theme_bw() +
-  facet_grid( ~ new.ID, scales = "free_x") +
+  facet_grid( ~ trial, scales = "free_x") +
   theme(legend.title = element_blank(), legend.position = 'bottom', 
     axis.ticks.x = element_blank(), axis.title.x = element_blank(), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
   scale_x_discrete(labels = c('', 'Average', 'High', 'Low')) + 
