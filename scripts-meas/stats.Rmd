@@ -122,10 +122,17 @@ table(statsumm[, .(slurry.type, separation.psg, trial)])
 ```
 
 ```{r}
+<<<<<<< HEAD
 statsumm[, separation.adg := separation]
 statsumm[slurry.type == 'AD' & separation == 'Liquid', separation.psg := 'Unsep']
 table(statsumm[, .(slurry.type, separation, trial)])
 table(statsumm[, .(slurry.type, separation.adg, trial)])
+=======
+isumm[, separation.adg := separation]
+isumm[slurry.type == 'AD' & separation == 'Liquid', separation.adg := 'Unsep']
+table(isumm[, .(slurry.type, separation, trial)])
+table(isumm[, .(slurry.type, separation.adg, trial)])
+>>>>>>> 53acd39400c451316caf5ade80a2ea8e7f4ef94a
 ```
 
 ```{r}
