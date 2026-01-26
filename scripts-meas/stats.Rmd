@@ -190,7 +190,7 @@ We still have the singular fit issue, but a very clear effect.
 
 
 
-#Stats for the biochar trials
+#Stats for the biochar trials 8 and 9, where we want to test if an increasing dose of biochar to both liquid pig slurry and liquid digestate had an effect on emissions (the dose has been considered as a numerical variable 0, 0.02, 0.1 i.e. 0, 2, and 10% of biochar on a wet weight basis)
 Make the plots of liquid pig slurry and liquid digestate with an increasing biochar dose
 
 ```{r}
@@ -257,7 +257,7 @@ summary(modb2)
 anova(modb2)
 
 ```
-#no effect of digestate dose on liquid pig slurry
+#no effect of biochar dose on liquid pig slurry
 
 ```{r}
 #subset digestate slurry data and write the linear model
@@ -288,6 +288,10 @@ plot(bsumm.ad$dose, bsumm.ad$e.rel.130,
 # Add regression line
 abline(modb3, col = "red", lwd = 2)
 ```
+
+For trial 7, we want to test if the biochar addition to the solid fraction of digestate had an effect on emissions. (in this case we only have no biochar and 1 does of biochar (0 vs 10% on wet weight) so the dose has been considered as a factor)
+
+
 ```{r}
 ggplot(bsumm.solid, aes(dose, e.rel.130, color =dose )) + 
   geom_point() + 
