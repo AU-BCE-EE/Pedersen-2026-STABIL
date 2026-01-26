@@ -186,3 +186,127 @@ We still have the singular fit issue, but a very clear effect.
 * The liquid fraction has lower emission than whole slurry for both, and the reduction is not clearly different between slurry types
 * For digestate, both liquid and solid fractions have lower emission than whole slurry, but are not clearly different from each other, if we consider that the separation effect varies among trials (and it clearly does, from mod2)
 * For pig slurry, whole slurry and the solid fraction are not clearly different, but liquid is clearly different (lower) than both
+
+
+
+
+#Stats for the biochar trials
+Make the plots of liquid pig slurry and liquid digestate with an increasing biochar dose
+
+```{r}
+ggplot(bsumm, aes(dose, e.rel.130, color = trial)) + 
+  geom_point() + 
+  geom_line(aes(group = trial)) + 
+  facet_wrap(~ slurry.type, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+```{r}
+ggplot(bsumm, aes(dose, e.rel.130, color = trial)) + 
+  geom_line() + 
+  geom_point() + 
+  stat_summary(aes(group = trial), fun = mean, geom = 'line') +
+  facet_wrap(~ slurry.type, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+```{r}
+ggplot(bsumm, aes(as.numeric(dose), e.rel.130, color = trial)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ slurry.type, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+```{r}
+ggplot(bsumm, aes(dose, e.rel.130, color = trial)) + 
+  geom_point() + 
+  geom_line() + 
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ slurry.type, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+Linear model to test if the increasing dose of biochar (0, 2, 10 %) added to liquid digestate and liquid pig slurry has an effect on emissions. 
+```{r}
+modb <- lm(e.rel.130 ~dose:slurry.type, data = bsumm)
+summary(modb)
+anova(modb)
+```
+
+from the model and plots it looks like biochar addition had an effect only on liquid digestate only
+
+```{r}
+plot(modb)
+qqnorm(resid(modb))
+qqline(resid(modb))
+```
+
+#test separately liquid pig and liquid digestate to make sure it is true
+
+```{r}
+
+#subset pig slurry data and write the linear model
+bsumm.pig <- bsumm[trial %in% paste('Trial', 9), ]
+modb2 <- lm(e.rel.130 ~ dose, data = bsumm.pig)
+summary(modb2)
+anova(modb2)
+
+```
+#no effect of digestate dose on liquid pig slurry
+
+```{r}
+#subset digestate slurry data and write the linear model
+bsumm.ad <- bsumm[trial %in% paste('Trial', 8), ]
+modb3 <- lm(e.rel.130 ~ dose, data = bsumm.ad)
+summary(modb3)
+anova(modb3)
+```
+There is an effect of biochar dose on liquid digestate
+
+Conclusions
+*For the liquid fraction of digestate, the addition of an increasing dose of biochar had an effect on emissions
+*An increasing dose of biochar increased the emissions from the liquid fraction of digestate
+*An increasing dose of biochar to the liquid fraction of pig slurry did not have an effect on emissions
+
+
+
+```{r}
+# Plot
+plot(bsumm.ad$dose, bsumm.ad$e.rel.130,
+     xlab = "Biochar Dose (% wet weight)",
+     ylab = "losse (% TAN)",
+     main = "",
+     pch = 16,
+     col = "blue",
+     cex = 1)
+
+# Add regression line
+abline(modb3, col = "red", lwd = 2)
+```
+```{r}
+ggplot(bsumm.solid, aes(dose, e.rel.130, color =dose )) + 
+  geom_point() + 
+  geom_line(aes(group = dose)) + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank())
+```
+from this plot it looks like biochar addition caused higher emissions compared to non-addition
+
+
+
+Fit the linear model to test if the emissions are influenced by biochar addition
+
+```{r}
+modb4 <- lm(e.rel.130 ~ dose, data = bsumm.solid)
+summary(modb4)
+anova(modb4)
+```
+#Conclusions
+*Addition of biochar to the solid fraction of separated digestate had an effect on emissions
+*Solid fraction of digestate with biochar addition had higher emissions compared to solid fraction of digestate without biochar addition
