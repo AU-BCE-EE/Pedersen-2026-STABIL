@@ -190,13 +190,16 @@ We still have the singular fit issue, but a very clear effect.
 
 
 
-#Stats for the biochar trials 8 and 9, where we want to test if an increasing dose of biochar to both liquid pig slurry and liquid digestate had an effect on emissions (the dose has been considered as a numerical variable 0, 0.02, 0.1 i.e. 0, 2, and 10% of biochar on a wet weight basis)
-Make the plots of liquid pig slurry and liquid digestate with an increasing biochar dose
+# Biochar stats
+Stats for the biochar trials 8 and 9, where we want to test if an increasing dose of biochar to both liquid pig slurry and liquid digestate had an effect on emissions
+The dose has been considered as a numerical variable 0, 0.02, 0.1 i.e. 0, 2, and 10% of biochar on a wet weight basis.
+Make the plots of liquid pig slurry and liquid digestate with an increasing biochar dose.
 
 ```{r}
 ggplot(bsumm, aes(dose, e.rel.130, color = trial)) + 
   geom_point() + 
-  geom_line(aes(group = trial)) + 
+  geom_line(alpha = 0.4) + 
+  geom_smooth(method = lm, se = FALSE) + 
   facet_wrap(~ slurry.type, scales = 'free_x') + 
   theme_bw() + 
   labs(y = 'Loss (frac. of TAN)') + 
@@ -231,41 +234,51 @@ ggplot(bsumm, aes(dose, e.rel.130, color = trial)) +
   labs(y = 'Loss (frac. of TAN)') + 
   theme(legend.title = element_blank())
 ```
+
+Plots show does effect but variability is high.
+
 Linear model to test if the increasing dose of biochar (0, 2, 10 %) added to liquid digestate and liquid pig slurry has an effect on emissions. 
+
 ```{r}
-modb <- lm(e.rel.130 ~dose:slurry.type, data = bsumm)
+modb <- lm(e.rel.130 ~ dose*slurry.type, data = bsumm)
 summary(modb)
 anova(modb)
 ```
 
-from the model and plots it looks like biochar addition had an effect only on liquid digestate only
+Model shows overall slurry type (or trial) effect, and *almost* shows a clear biochar does effect (p > 0.05 but close).
+No evidence of an interaction.
 
 ```{r}
-plot(modb)
+plot(modb, ask = FALSE)
 qqnorm(resid(modb))
 qqline(resid(modb))
 ```
 
-#test separately liquid pig and liquid digestate to make sure it is true
+```{r}
+confint(modb)
+```
+
+# Separate test for digestate
+
+Digestate has lower variability.
+Test separately liquid pig and liquid digestate.
 
 ```{r}
-
-#subset pig slurry data and write the linear model
 bsumm.pig <- bsumm[trial %in% paste('Trial', 9), ]
 modb2 <- lm(e.rel.130 ~ dose, data = bsumm.pig)
 summary(modb2)
 anova(modb2)
-
 ```
-#no effect of biochar dose on liquid pig slurry
+
+No effect of biochar dose on liquid pig slurry.
 
 ```{r}
-#subset digestate slurry data and write the linear model
 bsumm.ad <- bsumm[trial %in% paste('Trial', 8), ]
 modb3 <- lm(e.rel.130 ~ dose, data = bsumm.ad)
 summary(modb3)
 anova(modb3)
 ```
+
 There is an effect of biochar dose on liquid digestate
 
 Conclusions
@@ -279,7 +292,7 @@ Conclusions
 # Plot
 plot(bsumm.ad$dose, bsumm.ad$e.rel.130,
      xlab = "Biochar Dose (% wet weight)",
-     ylab = "losse (% TAN)",
+     ylab = "loss (% TAN)",
      main = "",
      pch = 16,
      col = "blue",
@@ -302,15 +315,13 @@ ggplot(bsumm.solid, aes(dose, e.rel.130, color =dose )) +
 ```
 from this plot it looks like biochar addition caused higher emissions compared to non-addition
 
-
-
 Fit the linear model to test if the emissions are influenced by biochar addition
 
 ```{r}
 modb4 <- lm(e.rel.130 ~ dose, data = bsumm.solid)
 summary(modb4)
-anova(modb4)
 ```
+
 #Conclusions
 *Addition of biochar to the solid fraction of separated digestate had an effect on emissions
 *Solid fraction of digestate with biochar addition had higher emissions compared to solid fraction of digestate without biochar addition
