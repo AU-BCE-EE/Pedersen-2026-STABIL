@@ -99,6 +99,12 @@ mod2b <- lmer(e.rel.130 ~ separation + slurry.type + (1 + separation | trial), d
 anova(mod2, mod2b, test = 'Chisq')
 ```
 
+But I've realized (remembered?) we can just use `drop1()` without creating the other model explicitly.
+
+```{r}
+drop1(mod2, test = 'Chisq')
+```
+
 p < 0.01, pretty clear.
 
 And it is clear from the plots that there is no consistent difference between
@@ -106,7 +112,7 @@ And it is clear from the plots that there is no consistent difference between
 * solid and liquid fractions from AD,
 * raw and solid from pig slurry.
 
-The only thing not clear from the combination of these results and the plots is if.
+The only thing not clear from the combination of these results and the plots is if:
 
 * AD liquid fraction is in fact lower than raw AD, 
 * pig liquid fraction is in fact lower than raw pig slurry. 
