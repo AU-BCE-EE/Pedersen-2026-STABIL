@@ -1,81 +1,13 @@
-# 
-# # create a 'component' and 'scenario_base' column for plotting
-# dfl$component <- ifelse(dfl$scenario == "Unseparated", "Unseparated",
-#   ifelse(grepl("^S ", dfl$scenario), "S", "L"))
-# 
-# dfl$scenario_base <- ifelse(dfl$scenario == "Unseparated", "Unseparated",
-#   sub("^[SL] ", "", dfl$scenario))
-# 
-# dfl$component <- factor(dfl$component, levels = c("Unseparated", "L", "S"))
-# 
-# # crease fill_id
-# dfl$fill_id <- NA_character_
-# dfl$fill_id[dfl$scenario_base == "Unseparated"] <- "Unseparated"
-# dfl$fill_id[dfl$component == "L"] <- paste0("L ", dfl$scenario_base[dfl$component == "L"])
-# dfl$fill_id[dfl$component == "S"] <- paste0("S ", dfl$scenario_base[dfl$component == "S"])
-# 
-# 
-# dfl$fill_id <- factor(dfl$fill_id,
-#   levels = c("Unseparated", paste0("L Scenario ", 1:3), paste0("S Scenario ", 1:3)))
-# 
-# cols <- c(
-#   "Unseparated" = "darkgreen",
-#   "L Scenario 2" = "#6baed6",
-#   "L Scenario 1" = "#c6dbef",
-#   "L Scenario 3" = "#c6dbef",
-#   "S Scenario 2" = "#fec44f",
-#   "S Scenario 1" = "#fff7bc",
-#   "S Scenario 3" = "#fff7bc"
-# )
-# 
-# 
-# dfl$x_id <- factor(dfl$scenario_base, levels = c("Unseparated", 'Scenario 2', 'Scenario 1', 'Scenario 3'))
-# 
-# dfl$x_plot <- interaction(dfl$trial, dfl$x_id, lex.order = TRUE)
-# 
-# dfl$trial_num <- as.numeric(sub("Scenario ", "", dfl$scenario_base))
-# 
-# # Extract trial number from scenario_base
-# dfl$trial_num <- as.numeric(sub("Scenario ", "", dfl$scenario_base))
-# 
-# 
-# ggplot(dfl, aes(x = x_plot, y = EF, fill = fill_id)) +
-#   geom_col(width = 0.7) +
-#   scale_fill_manual(values = cols) +
-#   labs(y = "Ammonia emission (frac. TAN)") +
-#   theme_bw() +
-#   facet_grid( ~ trial, scales = "free_x") +
-#   theme(legend.title = element_blank(), legend.position = 'bottom', 
-#     axis.ticks.x = element_blank(), axis.title.x = element_blank(), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-#   scale_x_discrete(labels = c('', 'Average', 'High', 'Low')) + 
-#   scale_fill_manual(values = cols, breaks = c("Unseparated", "L Scenario 2", "S Scenario 2"), labels = c("Unseparated", "Liquid fraction", "Solid fraction")) + 
-#   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-# ggsave2x('../plots/sep.scenarios', height = 3.5, width = 6)
-
-
-
-
-
-
 # create a 'component' and 'scenario_base' column for plotting
 dfl$component <- ifelse(dfl$scenario == "Unseparated", "Unseparated",
   ifelse(grepl("^S ", dfl$scenario), "S", "L"))
 
-dfl$component[dfl$component == "S"] <- "solid fraction"
+dfl$component[dfl$component == "S"] <- "Solid fraction"
 dfl$component[dfl$component == "L"] <- "Liquid fraction"
 
 
 dfl$scenario_base <- as.factor(ifelse(dfl$scenario == "Unseparated", "Unseparated",
   sub("^[SL] ", "", dfl$scenario)))
-
-dfl$component <- factor(dfl$component, levels = c("Unseparated", "L", "S"))
-
-# crease fill_id
-dfl$fill_id <- NA_character_
-dfl$fill_id[dfl$scenario_base == "Unseparated"] <- "Unseparated"
-dfl$fill_id[dfl$component == "L"] <- paste0("L ", dfl$scenario_base[dfl$component == "L"])
-dfl$fill_id[dfl$component == "S"] <- paste0("S ", dfl$scenario_base[dfl$component == "S"])
-
 
 dfl$component <- factor(dfl$component,
   levels = c("Unseparated", "Solid fraction", "Liquid fraction"))
@@ -87,26 +19,44 @@ cols <- c(
 )
 
 
-dfl$x_id <- factor(dfl$scenario_base, levels = c("Unseparated", 'Scenario 2'))
+dfl$x_id <- factor(dfl$scenario_base, levels = c("Unseparated", 'Scenario 2', 'Scenario 1', 'Scenario 3'))
 
 dfl$x_plot <- interaction(dfl$trial, dfl$x_id, lex.order = TRUE)
 
-dfl$trial_num <- as.numeric(sub("Scenario ", "", dfl$scenario_base))
 
-# Extract trial number from scenario_base
-dfl$trial_num <- as.numeric(sub("Scenario ", "", dfl$scenario_base))
+# dataframe for errorbars
+df_err <- dw_total
+names(df_err)[names(df_err) == "Scenario 1"] <- "Scenario_1"
+names(df_err)[names(df_err) == "Scenario 3"] <- "Scenario_3"
+df_err$x_plot <- paste0(df_err$trial, ".Scenario 2")
 
+# changing order of facets
+dfl$trial   <- factor(dfl$trial, levels = c('Trial 1', 'Trial 3', 'Trial 5', 'Trial 2', 'Trial 4', 'Trial 6'))
+df_err$trial <- factor(df_err$trial, levels = c('Trial 1', 'Trial 3', 'Trial 5', 'Trial 2', 'Trial 4', 'Trial 6'))
+
+# Adding additional grouping variable after 'material'
+dfl$material <- ifelse(dfl$trial %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Pig slurry", "Digestate")
+
+df_err$material <- ifelse(df_err$trial %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Pig slurry", "Digestate")
+
+dfl$material    <- factor(dfl$material, levels = c("Pig slurry", "Digestate"))
+df_err$material <- factor(df_err$material, levels = c("Pig slurry", "Digestate"))
+
+
+install.packages("ggh4x")
+library(ggh4x)
 
 ggplot(dfl[dfl$scenario_base == 'Unseparated' | dfl$scenario_base == 'Scenario 2', ], aes(x = x_plot, y = EF, fill = component)) +
   geom_col(width = 0.7) +
-  # scale_fill_manual(values = cols) +
-  # labs(y = "Ammonia emission (frac. TAN)") +
-  # theme_bw() +
-  facet_grid( ~ trial, scales = "free_x") +
-  # theme(legend.title = element_blank(), legend.position = 'bottom',
-  #   axis.ticks.x = element_blank(), axis.title.x = element_blank(), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-  # scale_fill_manual(values = cols, breaks = c("Unseparated", "L Scenario", "S Scenario"), labels = c("Unseparated", "Liquid fraction", "Solid fraction")) +
-  # scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  geom_errorbar(data = df_err, aes(x = x_plot, ymin = Scenario_1, ymax = Scenario_3), width = 0.25, inherit.aes = FALSE) +
+  scale_fill_manual(values = cols) +
+  labs(y = "Ammonia emission (frac. TAN)") +
+  theme_bw() +
+  facet_nested(~ material + trial, scales = "free_x", space = 'free_x') +
+  theme(legend.title = element_blank(), legend.position = 'bottom',
+  axis.ticks.x = element_blank(), axis.title.x = element_blank(), axis.text.x = element_blank()) +
+  scale_fill_manual(values = cols) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 ggsave2x('../plots/sep.scenarios', height = 3.5, width = 6)
 
 
