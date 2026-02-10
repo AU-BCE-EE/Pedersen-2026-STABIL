@@ -1,23 +1,23 @@
-
-# flux over time
-# all:
-ggplot(idat, aes(cta, j.NH3, group = pmid, color = treat)) +
-  geom_point() +
-  facet_wrap(~ trial, scales = 'free') +
-  theme_bw() +
-  labs(x = 'Time after application (h)', y = expression('NH'[3]~'flux'~('kg N h'^'-1'~ha^'-1'))) +
-  theme(legend.position = 'bottom', legend.title = element_blank())
-ggsave2x('../plots/NH3.flux01', height = 10, width = 10)
+# 
+# # flux over time
+# # all:
+# ggplot(idat, aes(cta, j.NH3, group = pmid, color = treat)) +
+#   geom_point() +
+#   facet_wrap(~ trial, scales = 'free') +
+#   theme_bw() +
+#   labs(x = 'Time after application (h)', y = expression('NH'[3]~'flux'~('kg N h'^'-1'~ha^'-1'))) +
+#   theme(legend.position = 'bottom', legend.title = element_blank())
+# ggsave2x('../plots/NH3.flux01', height = 10, width = 10)
 
 
 # Treatment names for publication purpose
 treat1 <- c(
-  `AD` =  'Digestate',
-  `AD-F` =  'Digestate solid',
-  `AD-L` =  'Digestate liquid',
-  `PS` =  'Pig slurry',
-  `PS-F` =  'Pig slurry solid',
-  `PS-L` =  'Pig slurry liquid',
+  `AD` =  'Unseparated digestate',
+  `AD-F` =  'Digestate solid fraction',
+  `AD-L` =  'Digestate liquid fraction',
+  `PS` =  'Unseparated pig slurry',
+  `PS-F` =  'Pig slurry solid fraction',
+  `PS-L` =  'Pig slurry liquid fraction',
   `AD-FB` =  'Digestate solid with biochar (high)',
   `AD-LB1` =  'Digestate liquid with biochar (low)',
   `AD-LB2` =  'Digestate liquid with biochar (high)',
@@ -27,27 +27,30 @@ treat1 <- c(
 
 fsumm[, treat1 := treat1[treat]]
 
+fsumm$material <- ifelse(fsumm$trial %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Digestate",
+                  ifelse(fsumm$trial %in% c('Trial 2', 'Trial 4', 'Trial 6'), "Pig slurry",
+                  ifelse(fsumm$trial %in% c('Trial 7', 'Trial 8', 'Trial 9'), "Biochar trials", NA)))
+
 fsumm1 <- fsumm[is.element(fsumm$trial, c('Trial 1', 'Trial 3', 'Trial 5')), ]
 fsumm2 <- fsumm[is.element(fsumm$trial, c('Trial 2', 'Trial 4', 'Trial 6')), ]
 fsumm3 <- fsumm[is.element(fsumm$trial, c('Trial 7', 'Trial 8', 'Trial 9')), ]
 
-
 cols1 <- c(
-  'Digestate' = 'darkgreen',
-  'Digestate liquid' = '#6baed6',
-  'Digestate solid' = '#fec44f'
+  'Unseparated digestate' = 'darkgreen',
+  'Digestate liquid fraction' = '#6baed6',
+  'Digestate solid fraction' = '#fec44f'
 )
 
 cols2 <- c(
-  'Pig slurry' = 'darkgreen',
-  'Pig slurry liquid' = '#6baed6',
-  'Pig slurry solid' = '#fec44f'
+  'Unseparated pig slurry' = 'darkgreen',
+  'Pig slurry liquid fraction' = '#6baed6',
+  'Pig slurry solid fraction' = '#fec44f'
 )
 
 cols3 <- c(
-  'Digestate solid' = '#fec44f',
-  'Digestate liquid' = '#6baed6',
-  'Pig slurry liquid' = '#6baed6',
+  'Digestate solid fraction' = '#fec44f',
+  'Digestate liquid fraction' = '#6baed6',
+  'Pig slurry liquid fraction' = '#6baed6',
   'Digestate solid with biochar (high)' = '#990000',
   'Digestate liquid with biochar (low)' = '#ff6666',
   'Digestate liquid with biochar (high)' = '#990000',
