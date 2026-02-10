@@ -42,10 +42,6 @@ df_err$material <- ifelse(df_err$trial %in% c('Trial 1', 'Trial 3', 'Trial 5'), 
 dfl$material    <- factor(dfl$material, levels = c("Pig slurry", "Digestate"))
 df_err$material <- factor(df_err$material, levels = c("Pig slurry", "Digestate"))
 
-
-install.packages("ggh4x")
-library(ggh4x)
-
 ggplot(dfl[dfl$scenario_base == 'Unseparated' | dfl$scenario_base == 'Scenario 2', ], aes(x = x_plot, y = EF, fill = component)) +
   geom_col(width = 0.7) +
   geom_errorbar(data = df_err, aes(x = x_plot, ymin = Scenario_1, ymax = Scenario_3), width = 0.25, inherit.aes = FALSE) +
