@@ -12,7 +12,7 @@ df.summx <- df.summx[
 
 
 # Adding additional grouping variable after 'material'
-df.summx$material <- ifelse(df.summx$new.ID %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Pig slurry", "Digestate")
+df.summx$material <- ifelse(df.summx$new.ID %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Digestate", "Pig slurry")
 
 df.summ1 <- df.summx[is.element(df.summx$new.ID, c('Trial 1', 'Trial 3', 'Trial 5')), ]
 df.summ2 <- df.summx[is.element(df.summx$new.ID, c('Trial 2', 'Trial 4', 'Trial 6')), ]
