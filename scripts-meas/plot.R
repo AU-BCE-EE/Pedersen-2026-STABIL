@@ -61,7 +61,7 @@ cols3 <- c(
 f11 <- ggplot(fsumm1, aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
   geom_point(shape = 1, size = 0.5) + 
   geom_line() + 
-  facet_wrap(~ trial, ncol = 3, scales = 'free_y') +
+  facet_nested(~ material + trial, scales = 'free_y') +
   theme_bw() + 
   geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
   ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
@@ -75,7 +75,7 @@ f11 <- ggplot(fsumm1, aes(cta, j.rel.mn, color = treat1, fill = treat1)) +
 f22 <- ggplot(fsumm2, aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
   geom_point(shape = 1, size = 0.5) + 
   geom_line() + 
-  facet_wrap(~ trial, ncol = 3, scales = 'free_y') +
+  facet_nested(~ material + trial, scales = 'free_y') +
   theme_bw() + 
   geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
   ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
@@ -160,7 +160,7 @@ ggsave2x('../plots/NH3.flux.comm.50', plot = pff, height = 10, width = 8)
 f1 <- ggplot(fsumm1, aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
   geom_point(shape = 1, size = 0.5) + 
   geom_line() + 
-  facet_wrap(~ trial, ncol = 3, scales = 'free_y') +
+  facet_nested(~ material + trial, scales = 'free_y') +
   theme_bw() + 
   geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
   ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
@@ -173,7 +173,7 @@ f1 <- ggplot(fsumm1, aes(cta, j.rel.mn, color = treat1, fill = treat1)) +
 f2 <- ggplot(fsumm2, aes(cta, j.rel.mn, color = treat1, fill = treat1)) + 
   geom_point(shape = 1, size = 0.5) + 
   geom_line() + 
-  facet_wrap(~ trial, ncol = 3, scales = 'free_y') +
+  facet_nested(~ material + trial, scales = 'free_y') +
   theme_bw() + 
   geom_ribbon(aes (ymax = j.rel.mn + j.rel.sd, ymin = j.rel.mn - j.rel.sd, group = treat1), alpha = 0.3, color = NA) + 
   ylab(expression(paste('Flux (frac. TAN  ', h^-1,')'))) + xlab('Time from application (h)') +
