@@ -1,0 +1,12 @@
+rm(list=ls())
+source("packages.R")
+source("exp.1.R")
+source("exp.2.R")
+source("exp.3.R")
+source("exp.4.R")
+source("exp.5.R")
+source("exp.6.R")
+source("exp.7.R")
+source("exp.8.R")
+source("exp.9.R")
+
