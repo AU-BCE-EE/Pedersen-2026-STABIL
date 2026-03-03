@@ -57,10 +57,10 @@ f22 <- ggplot(df.summ2, aes(elapsed.time, pH.mn, color = treat, fill = treat)) +
   scale_color_manual(values = cols2) +
   scale_fill_manual(values = cols2)
 
+yaxis_label <- ggplot() + 
+  theme_void() +
+  ylab('pH') +
+  theme(axis.title.y = element_text(angle = 90, margin = margin (r = 2)))
 
-mat <- matrix(c(1, 
-                2),
-              ncol = 1)
-
-pff <- grid.arrange(f11, f22, layout_matrix = mat)
+pff <- yaxis_label + (f11 / f22) + plot_layout(widths = c(0.01, 0.95))
 ggsave2x('../plots/surface.pH', plot = pff, height = 6, width = 8)

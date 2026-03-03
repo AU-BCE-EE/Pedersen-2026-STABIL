@@ -231,12 +231,6 @@ bottom <- (f31 | f32 | f33) +
   ) &
   guides(colour = guide_legend(nrow = 3, byrow = TRUE))
 
-main_plots <- (f1 / f2 / bottom) +
-  plot_layout(
-    heights = c(1, 1, 1),    # All three rows get equal panel height
-    guides = "collect"       # Ensure only one legend
-  )
-
 yaxis_label <- ggplot() + 
   theme_void() +
   ylab(expression(paste("Flux (frac. TAN  ", h^-1, ")"))) +

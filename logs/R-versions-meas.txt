@@ -6,7 +6,8 @@ Matrix products: default
 
 
 locale:
-[1] LC_COLLATE=Danish_Denmark.utf8  LC_CTYPE=Danish_Denmark.utf8    LC_MONETARY=Danish_Denmark.utf8 LC_NUMERIC=C                    LC_TIME=Danish_Denmark.utf8    
+[1] LC_COLLATE=Danish_Denmark.utf8  LC_CTYPE=Danish_Denmark.utf8    LC_MONETARY=Danish_Denmark.utf8 LC_NUMERIC=C                   
+[5] LC_TIME=Danish_Denmark.utf8    
 
 time zone: Europe/Copenhagen
 tzcode source: internal
@@ -15,10 +16,13 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] openxlsx_4.2.5.2  ggh4x_0.3.1       patchwork_1.3.2   scales_1.3.0      knitr_1.45        rmarkdown_2.25    gridExtra_2.3     lme4_1.1-35.5     Matrix_1.5-4.1    data.table_1.14.8 ggplot2_3.5.2    
+ [1] scales_1.3.0      knitr_1.45        rmarkdown_2.25    lme4_1.1-35.5     Matrix_1.5-4.1    patchwork_1.3.2   ggh4x_0.3.1       gridExtra_2.3    
+ [9] openxlsx_4.2.5.2  data.table_1.14.8 ggplot2_3.5.2    
 
 loaded via a namespace (and not attached):
- [1] utf8_1.2.3        generics_0.1.3    stringi_1.7.12    lattice_0.21-8    digest_0.6.33     magrittr_2.0.3    evaluate_0.21     grid_4.3.1        fastmap_1.1.1     zip_2.3.0         fansi_1.0.4      
-[12] textshaping_0.3.6 cli_3.6.1         rlang_1.1.1       munsell_0.5.0     splines_4.3.1     withr_2.5.0       tools_4.3.1       nloptr_2.0.3      minqa_1.2.5       dplyr_1.1.2       colorspace_2.1-0 
-[23] boot_1.3-28.1     vctrs_0.6.3       R6_2.5.1          lifecycle_1.0.3   MASS_7.3-60       ragg_1.2.5        pkgconfig_2.0.3   pillar_1.9.0      gtable_0.3.6      glue_1.6.2        Rcpp_1.0.12      
-[34] systemfonts_1.0.4 xfun_0.40         tibble_3.2.1      tidyselect_1.2.1  rstudioapi_0.15.0 farver_2.1.1      htmltools_0.5.6   nlme_3.1-166      labeling_0.4.2    compiler_4.3.1   
+ [1] gtable_0.3.6      dplyr_1.1.2       compiler_4.3.1    tidyselect_1.2.1  Rcpp_1.0.12       zip_2.3.0         splines_4.3.1     systemfonts_1.0.4
+ [9] textshaping_0.3.6 fastmap_1.1.1     boot_1.3-28.1     lattice_0.21-8    R6_2.5.1          labeling_0.4.2    generics_0.1.3    MASS_7.3-60      
+[17] tibble_3.2.1      nloptr_2.0.3      munsell_0.5.0     minqa_1.2.5       pillar_1.9.0      rlang_1.1.1       utf8_1.2.3        stringi_1.7.12   
+[25] xfun_0.40         cli_3.6.1         withr_2.5.0       magrittr_2.0.3    digest_0.6.33     grid_4.3.1        rstudioapi_0.15.0 nlme_3.1-166     
+[33] lifecycle_1.0.3   vctrs_0.6.3       evaluate_0.21     glue_1.6.2        farver_2.1.1      ragg_1.2.5        fansi_1.0.4       colorspace_2.1-0 
+[41] htmltools_0.5.6   tools_4.3.1       pkgconfig_2.0.3  
