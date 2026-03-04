@@ -1,8 +1,8 @@
 
 # Data not yet released, reading from the following commit: 
 
-idat <- fread('https://raw.githubusercontent.com/AU-BCE-EE/ALFAM2-data/af0654817f633833c8bd52d407e2cb7dceb1e5a7/data-output/03/ALFAM2_interval.csv.gz')
+idat <- fread('https://raw.githubusercontent.com/AU-BCE-EE/ALFAM2-data/083ed66e4f794a849449a828c0e4bc207ab8c109/data-output/03/ALFAM2_interval.csv.gz')
 
-pdat <- fread('https://raw.githubusercontent.com/AU-BCE-EE/ALFAM2-data/af0654817f633833c8bd52d407e2cb7dceb1e5a7/data-output/03/ALFAM2_plot.csv.gz')
+pdat <- fread('https://raw.githubusercontent.com/AU-BCE-EE/ALFAM2-data/083ed66e4f794a849449a828c0e4bc207ab8c109/data-output/03/ALFAM2_plot.csv.gz')
 
 
