@@ -84,7 +84,7 @@ mod2
 
 ## Model 2 hypothsis tests
 
-We can determine if there is evidence for it with a likelihood ratio test.
+We can determine if there is evidence for the separation in trial effect with a likelihood ratio test.
 
 ```{r}
 anova(mod1, mod2, test = 'Chisq')
@@ -107,7 +107,7 @@ drop1(mod2, test = 'Chisq')
 
 p < 0.01, pretty clear.
 
-And it is clear from the plots that there is no consistent difference between
+And it is clear from the plots that there is no consistent difference between:
 
 * solid and liquid fractions from AD,
 * raw and solid from pig slurry.
@@ -118,7 +118,7 @@ The only thing not clear from the combination of these results and the plots is 
 * pig liquid fraction is in fact lower than raw pig slurry. 
 
 We can test exactly these and only these by grouping factor levels and using likelihood ratio tests.
-
+The `psg` is for "pig slurry **g**rouped".
 
 ```{r}
 statsumm[, separation.psg := separation]
@@ -127,13 +127,13 @@ table(statsumm[, .(slurry.type, separation, trial)])
 table(statsumm[, .(slurry.type, separation.psg, trial)])
 ```
 
-```{r}
+And here is "anaerobic digestion **g**rouped".
 
+```{r}
 statsumm[, separation.adg := separation]
 statsumm[slurry.type == 'AD' & separation == 'Liquid', separation.adg := 'Unsep']
 table(statsumm[, .(slurry.type, separation, trial)])
 table(statsumm[, .(slurry.type, separation.adg, trial)])
-
 ```
 
 ```{r}
@@ -143,7 +143,7 @@ anova(mod2, mod2c, test = 'Chisq')
 anova(mod2, mod2d, test = 'Chisq')
 ```
 
-Singular fit is problematic for comparison.
+Singular fit is problematic (but not fatal) for comparison.
 
 ```{r}
 mod1c <- lmer(e.rel.130 ~ separation.psg + slurry.type + (1 | trial), data = statsumm, REML = FALSE)
@@ -182,6 +182,7 @@ So we can easily test for overall unsep vs. liquid effect.
 mod3c <- lmer(e.rel.130 ~ slurry.type + (1|trial), data = statsummul, REML = FALSE)
 summary(mod3c)
 anova(mod3c, mod3b, test = 'Chisq')
+drop1(mod3b, test = 'Chisq')
 ```
 
 We still have the singular fit issue, but a very clear effect.
@@ -192,9 +193,6 @@ We still have the singular fit issue, but a very clear effect.
 * The liquid fraction has lower emission than whole slurry for both, and the reduction is not clearly different between slurry types
 * For digestate, both liquid and solid fractions have lower emission than whole slurry, but are not clearly different from each other, if we consider that the separation effect varies among trials (and it clearly does, from mod2)
 * For pig slurry, whole slurry and the solid fraction are not clearly different, but liquid is clearly different (lower) than both
-
-
-
 
 # Biochar stats
 Stats for the biochar trials 8 and 9, where we want to test if an increasing dose of biochar to both liquid pig slurry and liquid digestate had an effect on emissions
