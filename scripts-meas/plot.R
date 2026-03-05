@@ -256,16 +256,13 @@ ggsave2x('../plots/cum.emis01', height = 10, width = 10)
 
 
 
-unique(statsumm$treat)
-setdiff(unique(statsumm$treat), names(treat1))
-
 treat1 <- c(
-  `AD` =  'Unseparated',
-  `AD-F` =  'Solid fraction',
-  `AD-L` =  'Liquid fraction',
-  `PS` =  'Unseparated',
-  `PS-F` =  'Solid fraction',
-  `PS-L` =  'Liquid fraction'
+  `AD`   = 'Digestate\nunseparated',
+  `AD-F` = 'Digestate\nsolid fraction',
+  `AD-L` = 'Digestate\nliquid fraction',
+  `PS`   = 'Pig slurry\nunseparated',
+  `PS-F` = 'Pig slurry\nsolid fraction',
+  `PS-L` = 'Pig slurry\nliquid fraction'
 )
 
 statsumm[, treat1 := ..treat1[as.character(treat)]]
@@ -296,7 +293,8 @@ p1 <- ggplot(statsumm[statsumm$slurry.type == 'AD', ], aes(treat1, e.rel.130, co
   theme(legend.title = element_blank(), legend.position = 'bottom') + 
   theme(axis.title.x = element_blank()) + 
   theme(axis.title.y = element_blank()) +
-  scale_color_manual(values = cols)
+  scale_color_manual(values = cols) + 
+  ylim(-0.03, 0.5)
 
 p2 <- ggplot(statsumm[statsumm$slurry.type == 'PS', ], aes(treat1, e.rel.130, color = trial)) + 
   geom_line() + 
@@ -308,7 +306,8 @@ p2 <- ggplot(statsumm[statsumm$slurry.type == 'PS', ], aes(treat1, e.rel.130, co
   theme(legend.title = element_blank(), legend.position = 'bottom') + 
   theme(axis.title.x = element_blank()) + 
   theme(axis.title.y = element_blank()) +
-  scale_color_manual(values = cols)
+  scale_color_manual(values = cols) + 
+  ylim(-0.03, 0.5)
 
 yaxis_label <- ggplot() + 
   theme_void() +

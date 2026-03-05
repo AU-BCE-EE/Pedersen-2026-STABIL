@@ -34,3 +34,19 @@ isumm <- rounddf(isumm, digits = 3, func = signif)
 esumm <- rounddf(esumm, 3, func = signif)
 wsumm <- rounddf(wsumm, 3, func = signif)
 
+
+
+# table for getting pmid id's for table in supporting
+
+pdat1 <- pdat[, c('pmid', 'exper', 'treat')]
+
+pdat1 <- pdat[, .(pmid, exper, treat)][
+  order(exper, treat)
+][, id := seq_len(.N), by = .(exper, treat)]
+
+pdat1 <- dcast(
+  pdat1,
+  exper + treat ~ id,
+  value.var = "pmid")
+
+setorder(pdat1, exper, treat)
