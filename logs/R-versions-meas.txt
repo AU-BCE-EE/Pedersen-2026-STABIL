@@ -15,11 +15,12 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ggh4x_0.3.1       patchwork_1.3.2   scales_1.3.0      knitr_1.45        rmarkdown_2.25    gridExtra_2.3     lme4_1.1-35.5     Matrix_1.5-4.1    ggplot2_3.5.2     data.table_1.14.8 jsonlite_1.8.7   
+ [1] openxlsx_4.2.5.2  ggh4x_0.3.1       patchwork_1.3.2   scales_1.3.0      knitr_1.45        rmarkdown_2.25    gridExtra_2.3     lme4_1.1-35.5     Matrix_1.5-4.1    ggplot2_3.5.2     data.table_1.14.8
+[12] jsonlite_1.8.7   
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.7        utf8_1.2.3        generics_0.1.3    lattice_0.21-8    digest_0.6.33     magrittr_2.0.3    evaluate_0.21     grid_4.3.1        fastmap_1.1.1     mgcv_1.8-42       fansi_1.0.4      
-[12] textshaping_0.3.6 jquerylib_0.1.4   cli_3.6.1         rlang_1.1.1       munsell_0.5.0     splines_4.3.1     cachem_1.0.8      withr_2.5.0       yaml_2.3.7        tools_4.3.1       nloptr_2.0.3     
-[23] minqa_1.2.5       dplyr_1.1.2       colorspace_2.1-0  boot_1.3-28.1     vctrs_0.6.3       R6_2.5.1          lifecycle_1.0.3   MASS_7.3-60       ragg_1.2.5        pkgconfig_2.0.3   pillar_1.9.0     
-[34] bslib_0.5.1       gtable_0.3.6      glue_1.6.2        Rcpp_1.0.12       systemfonts_1.0.4 highr_0.10        xfun_0.40         tibble_3.2.1      tidyselect_1.2.1  rstudioapi_0.15.0 farver_2.1.1     
-[45] htmltools_0.5.6   nlme_3.1-166      labeling_0.4.2    compiler_4.3.1   
+ [1] sass_0.4.7        utf8_1.2.3        generics_0.1.3    stringi_1.7.12    lattice_0.21-8    digest_0.6.33     magrittr_2.0.3    evaluate_0.21     grid_4.3.1        fastmap_1.1.1     zip_2.3.0        
+[12] mgcv_1.8-42       fansi_1.0.4       textshaping_0.3.6 jquerylib_0.1.4   cli_3.6.1         rlang_1.1.1       munsell_0.5.0     splines_4.3.1     cachem_1.0.8      withr_2.5.0       yaml_2.3.7       
+[23] tools_4.3.1       nloptr_2.0.3      minqa_1.2.5       dplyr_1.1.2       colorspace_2.1-0  boot_1.3-28.1     vctrs_0.6.3       R6_2.5.1          lifecycle_1.0.3   MASS_7.3-60       ragg_1.2.5       
+[34] pkgconfig_2.0.3   pillar_1.9.0      bslib_0.5.1       gtable_0.3.6      glue_1.6.2        Rcpp_1.0.12       systemfonts_1.0.4 highr_0.10        xfun_0.40         tibble_3.2.1      tidyselect_1.2.1 
+[45] rstudioapi_0.15.0 farver_2.1.1      htmltools_0.5.6   nlme_3.1-166      labeling_0.4.2    compiler_4.3.1   

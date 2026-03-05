@@ -254,6 +254,70 @@ ggplot(isumm, aes(treat, e.rel.130, color = treat)) +
   geom_boxplot(data = esumm, aes(x = treat, y = e.rel.130, color = treat), show.legend = FALSE)
 ggsave2x('../plots/cum.emis01', height = 10, width = 10)
 
+
+
+unique(statsumm$treat)
+setdiff(unique(statsumm$treat), names(treat1))
+
+treat1 <- c(
+  `AD` =  'Unseparated',
+  `AD-F` =  'Solid fraction',
+  `AD-L` =  'Liquid fraction',
+  `PS` =  'Unseparated',
+  `PS-F` =  'Solid fraction',
+  `PS-L` =  'Liquid fraction'
+)
+
+statsumm[, treat1 := ..treat1[as.character(treat)]]
+
+slurry.type1 <- c(
+  `AD` =  'Digestate',
+  `PS` =  'Pig slurry'
+)
+
+statsumm[, slurry.type1 := ..slurry.type1[as.character(slurry.type)]]
+
+cols <- c(
+  'Trial 1' = 'darkgreen',
+  'Trial 3' = '#6baed6',
+  'Trial 5' = '#fec44f', 
+  'Trial 2' = 'darkgreen',
+  'Trial 4' = '#6baed6',
+  'Trial 6' = '#fec44f'
+)
+
+p1 <- ggplot(statsumm[statsumm$slurry.type == 'AD', ], aes(treat1, e.rel.130, color = trial)) + 
+  geom_line() + 
+  geom_point() + 
+  stat_summary(aes(group = trial), fun = mean, geom = 'line') +
+  facet_wrap(~ slurry.type1, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank(), legend.position = 'bottom') + 
+  theme(axis.title.x = element_blank()) + 
+  theme(axis.title.y = element_blank()) +
+  scale_color_manual(values = cols)
+
+p2 <- ggplot(statsumm[statsumm$slurry.type == 'PS', ], aes(treat1, e.rel.130, color = trial)) + 
+  geom_line() + 
+  geom_point() + 
+  stat_summary(aes(group = trial), fun = mean, geom = 'line') +
+  facet_wrap(~ slurry.type1, scales = 'free_x') + 
+  theme_bw() + 
+  labs(y = 'Loss (frac. of TAN)') + 
+  theme(legend.title = element_blank(), legend.position = 'bottom') + 
+  theme(axis.title.x = element_blank()) + 
+  theme(axis.title.y = element_blank()) +
+  scale_color_manual(values = cols)
+
+yaxis_label <- ggplot() + 
+  theme_void() +
+  ylab('Loss (frac. of TAN)') +
+  theme(axis.title.y = element_text(angle = 90, margin = margin (r = 2)))
+
+pff <- yaxis_label + (p1 | p2) + plot_layout(widths = c(0.01, 0.95))
+ggsave2x('../plots/cum.emis02', plot = pff, height = 3, width = 6.5)
+
 ######### temperature
 
 idat_sub <- idat[idat$rep == '1', ]

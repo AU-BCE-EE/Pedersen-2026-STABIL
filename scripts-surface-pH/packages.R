@@ -4,7 +4,7 @@ library(data.table)
 library(openxlsx)
 library(gridExtra)
 library(ggh4x)
-library(patchwork
+library(patchwork)
 
 
 sink('../logs/R-versions-meas.txt')
