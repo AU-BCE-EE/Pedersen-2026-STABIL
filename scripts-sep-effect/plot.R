@@ -35,12 +35,12 @@ dfl$trial   <- factor(dfl$trial, levels = c('Trial 1', 'Trial 3', 'Trial 5', 'Tr
 df_err$trial <- factor(df_err$trial, levels = c('Trial 1', 'Trial 3', 'Trial 5', 'Trial 2', 'Trial 4', 'Trial 6'))
 
 # Adding additional grouping variable after 'material'
-dfl$material <- ifelse(dfl$trial %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Pig slurry", "Digestate")
+dfl$material <- ifelse(dfl$trial %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Digestate", "Pig slurry")
 
-df_err$material <- ifelse(df_err$trial %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Pig slurry", "Digestate")
+df_err$material <- ifelse(df_err$trial %in% c('Trial 1', 'Trial 3', 'Trial 5'), "Digestate", "Pig slurry")
 
-dfl$material    <- factor(dfl$material, levels = c("Pig slurry", "Digestate"))
-df_err$material <- factor(df_err$material, levels = c("Pig slurry", "Digestate"))
+dfl$material    <- factor(dfl$material, levels = c("Digestate", "Pig slurry"))
+df_err$material <- factor(df_err$material, levels = c("Digestate", "Pig slurry"))
 
 ggplot(dfl[dfl$scenario_base == 'Unseparated' | dfl$scenario_base == 'Scenario 2', ], aes(x = x_plot, y = EF, fill = component)) +
   geom_col(width = 0.7) +
