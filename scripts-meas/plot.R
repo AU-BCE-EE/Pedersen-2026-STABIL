@@ -269,3 +269,17 @@ ggplot(idat_first,
   labs(x = 'Time after application (h)', y = 'Air temperature (°C)') + 
   theme(legend.position = 'bottom', legend.title = element_blank()) 
 ggsave2x('../plots/temp', height = 10, width = 10)
+
+# Separation effect interaction plot
+statsumm[, slurry.type.nm := factor(slurry.type, levels = c('AD', 'PS'), labels = c('Digestate', 'Pig slurry'))]
+statsumm[, trial.int := sub('Trial ', '', trial)]
+ssmn <- statsumm[, .(e.rel.130 = mean(e.rel.130)), by = .(treat, trial, trial.int, slurry.type.nm)]
+ggplot(statsumm, aes(treat, e.rel.130, color = trial)) + 
+  geom_point() + 
+  geom_text(data = ssmn[treat %in% c('AD-L', 'PS-L'), ], aes(label = trial.int), hjust = -1) + 
+  geom_line(data = ssmn, aes(group = trial), alpha = 0.5) +
+  facet_wrap(~ slurry.type.nm, scales = 'free_x') + 
+  theme_bw() + 
+  labs(x  = '', y = 'Loss (frac. of TAN)') + 
+  theme(legend.position = 'none')
+ggsave2x('../plots/emis_sep_int', height = 2.2, width = 4)
