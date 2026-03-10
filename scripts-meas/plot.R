@@ -284,7 +284,6 @@ cols <- c(
 )
 
 p1 <- ggplot(statsumm[statsumm$slurry.type == 'AD', ], aes(treat1, e.rel.130, color = trial)) + 
-  geom_line() + 
   geom_point() + 
   stat_summary(aes(group = trial), fun = mean, geom = 'line') +
   facet_wrap(~ slurry.type1, scales = 'free_x') + 
@@ -297,7 +296,6 @@ p1 <- ggplot(statsumm[statsumm$slurry.type == 'AD', ], aes(treat1, e.rel.130, co
   ylim(-0.03, 0.5)
 
 p2 <- ggplot(statsumm[statsumm$slurry.type == 'PS', ], aes(treat1, e.rel.130, color = trial)) + 
-  geom_line() + 
   geom_point() + 
   stat_summary(aes(group = trial), fun = mean, geom = 'line') +
   facet_wrap(~ slurry.type1, scales = 'free_x') + 
