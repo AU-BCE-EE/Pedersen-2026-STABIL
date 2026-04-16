@@ -68,7 +68,7 @@ The scripts `main.R` calls all others.
 The tables can be found in `output`.
 
 # Links to technical note
-This section give the sources of tables, figures, and some statistical results presented in the technical note (https://doi.org/10.1016/j.aeaoa.2025.100408).
+This section give the sources of tables, figures, and some statistical results presented in the manuscript in preparation. 
 
 | Paper component          |  Repo source                             |  Repo scripts             |
 |-----------------         |-----------------                         |---------------            |
