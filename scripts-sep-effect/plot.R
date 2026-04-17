@@ -55,6 +55,23 @@ ggplot(dfl[dfl$scenario_base == 'Unseparated' | dfl$scenario_base == 'Scenario 2
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 ggsave2x('../plots/sep.scenarios', height = 3.5, width = 6)
 
+# Plot for TOC
+
+dflA <- dfl[dfl$trial == 'Trial 1' | dfl$trial == 'Trial 4',]
+df_errA <- df_err[df_err$trial == 'Trial 1' | df_err$trial == 'Trial 4',]
+
+ggplot(dflA[dflA$scenario_base == 'Unseparated' | dflA$scenario_base == 'Scenario 2', ], aes(x = x_plot, y = EF, fill = component)) +
+  geom_col(width = 0.7) +
+  scale_fill_manual(values = cols) +
+  labs(y = expression("Total " * NH[3] * " emission")) +
+  theme_bw() +
+  facet_nested(~ material, scales = "free_x", space = 'free_x') +
+  theme(legend.title = element_blank(), legend.position = 'bottom',
+        axis.ticks.x = element_blank(), axis.title.x = element_blank(), axis.text.x = element_blank()) +
+  scale_fill_manual(values = cols) +
+  scale_y_continuous( breaks = 0, labels = "0", expand = expansion(mult = c(0, 0.05))  )
+ggsave2x('../plots/forTOC', height = 2.5, width = 4)
+
 
 
 
