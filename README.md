@@ -1,7 +1,7 @@
 # Pedersen-2026-STABIL
 Repository contains data and scripts related to a manuscript presenting NH3 application and associated data from the STABIL project.
 
-Manuscript: J. Pedersen, A. H. Støckler, F. D. Pierre, S. D. Hafner, A. Feilberg, J. N. Kamp. Effects of separation and biochar addition on ammonia emission from field-applied liquid animal manure. Manuscript in preparation, April 2026. 
+Manuscript: J. Pedersen, A. H. Støckler, F. D. Pierre, S. D. Hafner, A. Feilberg, J. N. Kamp. Ammonia Emission from Field-Applied Pig Slurry and Digestate: Effects of Solid-Liquid Separation and Biochar Addition. ACS Agricultural Science & Technology. https://doi.org/10.1021/acsagscitech.6c00417
 
 # Maintainer
 Johanna Pedersen. Contact information here: https://www.researchgate.net/profile/Johanna-Pedersen 
